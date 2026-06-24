@@ -7,6 +7,7 @@ next-env.d.ts
 
 # 由 scripts/sync-content.mjs 从 pi-web/docs/product 同步生成（非手维护）
 /pages/docs/
+/pages/en/
 
 # 系统
 .DS_Store
