@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>pi-web — 为 pi 智能体即刻披上一袭 Web</title>
+<title>pi-web — instantly give your pi agent a web</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -211,30 +211,31 @@
   <div class="nav"><div class="wrap">
     <div class="logo">pi<span class="d">·</span>web</div>
     <div class="nav-links">
-      <a href="/docs/00-product-overview">概述</a>
-      <a href="/docs/03-architecture">架构</a>
-      <a href="/docs/13-http-api-reference">API</a>
+      <a href="/en/docs/00-product-overview">Overview</a>
+      <a href="/en/docs/03-architecture">Architecture</a>
+      <a href="/en/docs/13-http-api-reference">API</a>
       <a class="nav-ic" href="https://github.com/blksails/pi-web" target="_blank" rel="noopener" aria-label="GitHub">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.8 18 5.1 18 5.1c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
       </a>
       <a class="nav-ic" href="https://x.com/hysios" target="_blank" rel="noopener" aria-label="X / @hysios">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-7-6.2 7H1.4l8.1-9.3L1 2h7.1l4.9 6.4L18.9 2zm-2.4 18h1.9L7.6 4H5.6l10.9 16z"/></svg>
       </a>
-      <a href="/en/" class="nav-lang" aria-label="Switch to English">EN</a>
-      <a class="nav-cta" href="/docs/01-quickstart">阅读文档 →</a>
+      <a href="/" class="nav-lang" aria-label="切换到中文">中文</a>
+      <a class="nav-cta" href="/en/docs/01-quickstart">Read the docs →</a>
     </div>
   </div></div>
 
   <header class="hero"><div class="wrap">
     <span class="eyebrow">PI&nbsp;CODING&nbsp;AGENT&nbsp;·&nbsp;INSTANT&nbsp;WEB&nbsp;UI</span>
-    <h1 class="hero-t serif">为 pi 智能体，即刻披上一袭 Web<span class="accent">。</span></h1>
+    <h1 class="hero-t serif">Instantly give your pi agent a web<span class="accent">.</span></h1>
     <p class="hero-sub">
-      指向一处目录或仓库，pi-web 自动载入你的 agent——奉上流式对话、工具、
-      附件与 Canvas 画布，一套生产可用的前端，几近零额外工程。
+      Point it at a directory or repo, and pi-web loads your agent automatically—serving
+      streaming chat, tools, attachments, and a Canvas surface as a production-ready
+      front end, with virtually zero extra engineering.
     </p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="/docs/01-quickstart">快速开始</a>
-      <a class="btn btn-ghost" href="/docs/00-product-overview">了解能力</a>
+      <a class="btn btn-primary" href="/en/docs/01-quickstart">Get started</a>
+      <a class="btn btn-ghost" href="/en/docs/00-product-overview">Explore features</a>
     </div>
 
     <!-- 真实应用界面：对话 + promptInput + Canvas/Artifact -->
@@ -246,14 +247,14 @@
         <div class="app-chat">
           <div class="thread">
             <div class="msg">
-              <div class="ava u">你</div>
-              <div class="bubble">画一只宋代汝窑天青釉的山水意境，淡远些。</div>
+              <div class="ava u">U</div>
+              <div class="bubble">Paint a Song-dynasty Ru-ware sky-blue landscape—distant and serene.</div>
             </div>
             <div class="msg">
               <div class="ava a">π</div>
               <div class="bubble">
-                <p class="think">构思构图：远山、月、留白，取天青釉色……</p>
-                好的，已生成并放到右侧画布。
+                <p class="think">Composing: distant peaks, the moon, negative space, in Ru-ware sky-blue…</p>
+                Done—generated and placed it on the canvas to the right.
                 <div class="tool-card">
                   <div class="tool-head"><span class="dotg"></span>image_generation&nbsp;·&nbsp;completed</div>
                 </div>
@@ -264,9 +265,9 @@
 
           <!-- promptInput -->
           <div class="prompt-bar">
-            <div class="pb-text">追问或继续编辑这张图…</div>
+            <div class="pb-text">Ask a follow-up or keep editing this image…</div>
             <div class="pb-row">
-              <div class="pb-ic" title="附件">
+              <div class="pb-ic" title="Attach">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5l-8.5 8.5a5 5 0 0 1-7-7l8.5-8.5a3.3 3.3 0 0 1 4.7 4.7L9 16.5a1.6 1.6 0 0 1-2.3-2.3l7.6-7.6"/></svg>
               </div>
               <span class="pb-chip"><span class="dotg"></span>opus&nbsp;·&nbsp;thinking</span>
@@ -281,7 +282,7 @@
         <!-- 右：Canvas / Artifact -->
         <div class="app-canvas">
           <div class="canvas-head">
-            <div class="canvas-tabs"><span class="on">Canvas</span><span>代码</span><span>预览</span></div>
+            <div class="canvas-tabs"><span class="on">Canvas</span><span>Code</span><span>Preview</span></div>
             <div class="canvas-tools">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 15V3M7 10l5 5 5-5M5 21h14"/></svg>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3"/></svg>
@@ -311,7 +312,7 @@
                 <path d="M250 150 q30 -10 60 8" stroke="#eef6f1" stroke-width="1" fill="none" opacity="0.5"/>
               </svg>
             </div>
-            <div class="art-cap"><span class="dotg" style="background:var(--accent)"></span>artifact · 天青釉山水 · 1024×640</div>
+            <div class="art-cap"><span class="dotg" style="background:var(--accent)"></span>artifact · sky-blue landscape · 1024×640</div>
           </div>
         </div>
 
@@ -322,25 +323,27 @@
   <!-- 能力 1 · 双模式 -->
   <section class="feat"><div class="wrap"><div class="feat-grid">
     <div>
-      <div class="kicker">以 pi 为内核</div>
-      <h2 class="feat-t serif">pi 为核，一套协议，<br>Web 为其延展</h2>
+      <div class="kicker">Powered by pi</div>
+      <h2 class="feat-t serif">pi at the core, one protocol,<br>the web as its extension</h2>
       <p class="feat-p">
-        内核始终是 <b>pi</b>。无论你的自定义 agent（经 SDK <b>runRpcMode</b>），还是通用
-        <b>pi --mode rpc</b>，对外都说<b>同一套 RPC 协议</b>；pi-web 只在协议之上为 pi
-        添一层 <b>Web 延展</b>——桥接完全复用，pi 的扩展、skills 与工具原样直通。
+        The core is always <b>pi</b>. Whether it's your custom agent (via the SDK's
+        <b>runRpcMode</b>) or the general <b>pi --mode rpc</b>, both speak the
+        <b>same RPC protocol</b>. pi-web simply adds a <b>web extension</b> on top of that
+        protocol—the bridge is fully reused, so pi's extensions, skills, and tools pass
+        straight through.
       </p>
       <div class="mini">
-        <div><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>pi 的 extensions / skills / 工具原样直通</div>
-        <div><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>一会话一进程，干净隔离</div>
+        <div><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>pi's extensions / skills / tools pass straight through</div>
+        <div><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>One session, one process—clean isolation</div>
       </div>
     </div>
     <div class="code term">
       <div class="win-bar"><i></i><i></i><i></i><span class="win-title">zsh</span></div>
-<pre><span class="c"># 指向任意 pi agent 源，即得一站</span>
+<pre><span class="c"># Point at any pi agent source to get a full site</span>
 <span class="prompt">$</span> npx pi-web <span class="flag">./examples/aigc-agent</span>
 
-<span class="out">✓ 解析源 · 探测到 index.ts → custom 模式</span>
-<span class="out">✓ 会话进程已就绪</span>
+<span class="out">✓ Source resolved · detected index.ts → custom mode</span>
+<span class="out">✓ Session process ready</span>
 <span class="out">➜ http://localhost:3000</span></pre>
     </div>
   </div></div></section>
@@ -349,10 +352,12 @@
   <section class="feat alt rev"><div class="wrap"><div class="feat-grid">
     <div>
       <div class="kicker">defineAgent</div>
-      <h2 class="feat-t serif">写 agent，像描述一个对象</h2>
+      <h2 class="feat-t serif">Write an agent like you describe an object</h2>
       <p class="feat-p">
-        一个 <b>index.ts</b>，默认导出一份 <b>AgentDefinition</b>——系统提示、自定义工具、模型，皆为字段。
-        <b>defineAgent()</b> 只为类型推断，零运行时强依赖；省略 model 即继承你 pi 登录的默认。
+        A single <b>index.ts</b> with a default-exported <b>AgentDefinition</b>—system prompt,
+        custom tools, and model are all just fields. <b>defineAgent()</b> is there for type
+        inference only, with no hard runtime dependency; omit the model and it inherits your
+        pi login default.
       </p>
     </div>
     <div class="code">
@@ -369,7 +374,7 @@
 });
 
 <span class="k">export default</span> <span class="f">defineAgent</span>({
-  <span class="c">// model 省略 → 继承 ~/.pi/agent 默认</span>
+  <span class="c">// model omitted → inherits ~/.pi/agent default</span>
   systemPrompt: <span class="s">"You are a helpful agent."</span>,
   customTools: [echo],
 });</pre>
@@ -379,24 +384,24 @@
   <!-- 能力 3 · 三件套 -->
   <section class="feat"><div class="wrap">
     <div class="center-head">
-      <h2 class="serif">视觉、附件、画布，开箱即用</h2>
-      <p>那些重复且昂贵的前端工程，pi-web 已替你备好。</p>
+      <h2 class="serif">Vision, attachments, and canvas—out of the box</h2>
+      <p>pi-web has already built the repetitive, expensive front-end work for you.</p>
     </div>
     <div class="triple">
       <div class="card">
         <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h18v14H3z"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="9" r="1.5"/></svg></div>
-        <h3>视觉与附件</h3>
-        <p>图片/文件上传落对象存储、签名分发；base64 喂 LLM 识别，或文件交服务端工具处理。</p>
+        <h3>Vision &amp; attachments</h3>
+        <p>Images and files land in object storage and are served via signed URLs; base64 feeds vision LLMs, or hand files to server-side tools for processing.</p>
       </div>
       <div class="card">
         <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 4l6 6-10 10H4v-6L14 4z"/></svg></div>
-        <h3>工具与产出回流</h3>
-        <p>工具经 attachmentId 解析文件、执行、落库回流，产出可在下一轮再次引用——闭环。</p>
+        <h3>Tools &amp; output loop-back</h3>
+        <p>Tools resolve files by attachmentId, execute, and persist their output back—results can be referenced again in the next turn. A full loop.</p>
       </div>
       <div class="card">
         <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h11v14H4zM18 5h2v14h-2"/><path d="M7 9h5M7 13h5"/></svg></div>
-        <h3>Canvas 画布 / Artifact</h3>
-        <p>图像、报告、网页以独立画布呈现于侧栏，可切换代码与预览，并随对话实时更新。</p>
+        <h3>Canvas / Artifact</h3>
+        <p>Images, reports, and web pages render as standalone canvases in the side panel—switch between code and preview, updating live as the conversation unfolds.</p>
       </div>
     </div>
   </div></section>
@@ -404,20 +409,21 @@
   <!-- 能力 4 · provider -->
   <section class="feat alt"><div class="wrap"><div class="feat-grid">
     <div>
-      <div class="kicker">任意 Provider</div>
-      <h2 class="feat-t serif">内置 Provider 直连，<br>自定义 Provider 任接</h2>
+      <div class="kicker">Any provider</div>
+      <h2 class="feat-t serif">Built-in providers connect directly,<br>custom providers plug right in</h2>
       <p class="feat-p">
-        pi-web 复用 pi 的 <b>Provider</b> 体系——一个 Provider 即一处模型来源。
-        <b>OpenAI</b>、<b>Anthropic</b>、Google 等内置 Provider 开箱直连；
-        自定义 Provider（如 <b>阿里云百炼</b>、DeepSeek 等国内服务，或 NewAPI 这类 OpenAI 兼容网关），
-        只需在 <b>~/.pi/agent/models.json</b> 登记 baseUrl 与 apiKey。模型即现于设置页
-        <b>按 provider 分组、可搜索</b>的下拉里。
+        pi-web reuses pi's <b>provider</b> system—one provider is one source of models.
+        Built-in providers like <b>OpenAI</b>, <b>Anthropic</b>, and Google connect out of
+        the box; custom providers (such as <b>Alibaba Cloud Bailian</b>, DeepSeek and other
+        regional services, or OpenAI-compatible gateways like NewAPI) just need a baseUrl and
+        apiKey registered in <b>~/.pi/agent/models.json</b>. Their models then show up in the
+        settings page in a <b>searchable dropdown, grouped by provider</b>.
       </p>
       <div class="chips">
         <span class="chip">OpenAI</span>
         <span class="chip">Anthropic</span>
         <span class="chip">Google</span>
-        <span class="chip">阿里云百炼</span>
+        <span class="chip">Alibaba Bailian</span>
         <span class="chip">DeepSeek</span>
         <span class="chip">NewAPI</span>
       </div>
@@ -443,11 +449,12 @@
   <!-- 能力 5 · 分层开放 -->
   <section class="feat"><div class="wrap"><div class="feat-grid">
     <div>
-      <div class="kicker">分层开放</div>
-      <h2 class="feat-t serif">可整站部署，亦可按需嵌入</h2>
+      <div class="kicker">Layered &amp; open</div>
+      <h2 class="feat-t serif">Deploy the whole site, or embed just what you need</h2>
       <p class="feat-p">
-        语言无关的 HTTP/SSE 协议 + 单向收敛的分层包 + 渲染器注册表。从协议到组件逐层解耦——
-        既能整站起，也能把 <b>Headless hooks</b> 嵌进你自己的 React 栈。
+        A language-agnostic HTTP/SSE protocol + one-way layered packages + a renderer registry.
+        Decoupled layer by layer from protocol to component—run the full site, or drop the
+        <b>headless hooks</b> into your own React stack.
       </p>
       <div class="chips">
         <span class="chip"><b>@blksails/</b>pi-web-protocol</span>
@@ -470,11 +477,11 @@
   </div></div></section>
 
   <section class="cta"><div class="wrap">
-    <h2 class="serif">把「写好一个 agent」到「它有了产品」的距离，压到接近零。</h2>
-    <p>五分钟，从一处目录到一个可对外的流式 Web 应用。</p>
+    <h2 class="serif">Shrink the distance from "I wrote an agent" to "it's a product" to nearly zero.</h2>
+    <p>Five minutes, from a directory to a public-facing, streaming web app.</p>
     <div class="hero-cta" style="margin-top:0">
-      <a class="btn btn-primary" href="/docs/01-quickstart">立即开始</a>
-      <a class="btn btn-ghost" href="/docs/02-core-concepts">读懂原理</a>
+      <a class="btn btn-primary" href="/en/docs/01-quickstart">Start now</a>
+      <a class="btn btn-ghost" href="/en/docs/02-core-concepts">Learn how it works</a>
     </div>
   </div></section>
 
@@ -490,7 +497,7 @@
         @hysios
       </a>
     </div>
-    <div class="seal"><b>印</b>&nbsp;素以为绚 · © BLKSAILS</div>
+    <div class="seal"><b>印</b>&nbsp;Plain silk, ready for color · © BLKSAILS</div>
   </div></footer>
 
 </body>
