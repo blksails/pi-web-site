@@ -61,7 +61,9 @@ function mdxSafe(md) {
       return seg
         .replace(/\{/g, "&#123;")
         .replace(/\}/g, "&#125;")
-        .replace(/</g, "&lt;");
+        .replace(/</g, "&lt;")
+        // 正文行首的 import/export 会被 MDX 当作 ESM 语句 → 首字母实体化（渲染不变）
+        .replace(/^(import|export)\b/gm, (w) => `&#${w.charCodeAt(0)};${w.slice(1)}`);
     })
     .join("");
 }
