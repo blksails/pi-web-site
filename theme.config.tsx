@@ -10,9 +10,18 @@ const config = {
     </span>
   ),
   project: {
-    link: "https://github.com/blksails/pi-web",
+    link: "https://github.com/hysios",
   },
-  docsRepositoryBase: "https://github.com/blksails/pi-web/tree/main/docs/product",
+  // X / Twitter @hysios（用 navbar 的 chat 槽位放第二个社交图标）
+  chat: {
+    link: "https://x.com/hysios",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-label="X / @hysios">
+        <path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-7-6.2 7H1.4l8.1-9.3L1 2h7.1l4.9 6.4L18.9 2zm-2.4 18h1.9L7.6 4H5.6l10.9 16z" />
+      </svg>
+    ),
+  },
+  docsRepositoryBase: "https://github.com/hysios/pi-web/tree/main/docs/product",
   color: {
     hue: 162, // 青釉绿色相
     saturation: 24,
