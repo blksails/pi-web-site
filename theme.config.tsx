@@ -14,6 +14,7 @@ function LanguageToggle() {
   return (
     <a
       href={target}
+      className="js-lang-toggle"
       aria-label={isEn ? "切换到中文" : "Switch to English"}
       style={{ fontSize: 14, fontWeight: 500, padding: "0 8px", whiteSpace: "nowrap" }}
     >
@@ -66,6 +67,13 @@ const config = {
       <link
         href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;600&display=swap"
         rel="stylesheet"
+      />
+      {/* 语言偏好检测：首访按浏览器语言中文→英文跳转；记住偏好；手动切换永久优先；无循环 */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html:
+            '(function(){try{var K="pi-web-lang",p=location.pathname,isEn=(p==="/en"||p.indexOf("/en/")===0),pref=null;try{pref=localStorage.getItem(K);}catch(e){}document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("a.js-lang-toggle");if(a){try{localStorage.setItem(K,isEn?"zh":"en");}catch(_){}}} ,true);if(!isEn){var go=(pref==="en");if(!pref){var l=(navigator.language||"").toLowerCase();if(l&&l.indexOf("zh")!==0){go=true;try{localStorage.setItem(K,"en");}catch(_){}}}if(go)location.replace("/en"+(p==="/"?"/":p));}else if(pref==="zh"){location.replace(p.replace(/^\\/en/,"")||"/");}}catch(_){}})();',
+        }}
       />
     </>
   ),

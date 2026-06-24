@@ -205,6 +205,26 @@
     .nav-links a:not(.nav-cta){display:none}
   }
 </style>
+<script>
+/* Language preference detection: first visit redirects zh→en by browser language; remembers choice; manual toggle always wins; no loops */
+(function(){try{
+  var K="pi-web-lang",p=location.pathname,
+      isEn=(p==="/en"||p.indexOf("/en/")===0),pref=null;
+  try{pref=localStorage.getItem(K);}catch(e){}
+  document.addEventListener("click",function(e){
+    var a=e.target.closest&&e.target.closest("a.js-lang-toggle");
+    if(a){try{localStorage.setItem(K,isEn?"zh":"en");}catch(_){}}
+  },true);
+  if(!isEn){
+    var go=(pref==="en");
+    if(!pref){var l=(navigator.language||"").toLowerCase();
+      if(l&&l.indexOf("zh")!==0){go=true;try{localStorage.setItem(K,"en");}catch(_){}}}
+    if(go)location.replace("/en"+(p==="/"?"/":p));
+  }else if(pref==="zh"){
+    location.replace(p.replace(/^\/en/,"")||"/");
+  }
+}catch(_){}})();
+</script>
 </head>
 <body>
 
@@ -220,7 +240,7 @@
       <a class="nav-ic" href="https://x.com/hysios" target="_blank" rel="noopener" aria-label="X / @hysios">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.9l-5.4-7-6.2 7H1.4l8.1-9.3L1 2h7.1l4.9 6.4L18.9 2zm-2.4 18h1.9L7.6 4H5.6l10.9 16z"/></svg>
       </a>
-      <a href="/" class="nav-lang" aria-label="切换到中文">中文</a>
+      <a href="/" class="nav-lang js-lang-toggle" aria-label="切换到中文">中文</a>
       <a class="nav-cta" href="/en/docs/01-quickstart">Read the docs →</a>
     </div>
   </div></div>
