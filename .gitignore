@@ -1,0 +1,12 @@
+# 依赖与构建产物
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# 由 scripts/sync-content.mjs 从 pi-web/docs/product 同步生成（非手维护）
+/pages/docs/
+
+# 系统
+.DS_Store

@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>pi-web — 为 pi 智能体即刻披上一袭 Web</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    /* 宋瓷 · 汝窑天青 / 梅子青 / 月白 */
+    --bg:#eef2ef; --bg-2:#e7ede9; --bg-3:#e1e9e4;
+    --panel:#f8fbf9;            /* 瓷白 */
+    --ink:#27322e;             /* 墨青 */
+    --ink-2:#566962; --ink-3:#8a9d95;
+    --line:rgba(39,50,46,.10); --line-2:rgba(39,50,46,.055);
+    --accent:#5f8c7d;          /* 梅子青 · 主强调 */
+    --accent-2:#71a08f;
+    --tianqing:#9cc0b4;        /* 天青 */
+    --soft:rgba(95,140,125,.10);
+    --seal:#9c5a4a;            /* 极克制的一点窑变赭 */
+    --serif:"Noto Serif SC",Georgia,"Times New Roman",serif;
+    --sans:"Noto Sans SC",ui-sans-serif,system-ui,-apple-system,"PingFang SC",sans-serif;
+    --mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,monospace;
+    --code:#22302a; --code-2:#2a392f;     /* 墨青代码卡 */
+    --shadow:0 1px 2px rgba(39,50,46,.04),0 18px 48px -16px rgba(39,50,46,.20);
+    --shadow-soft:0 1px 2px rgba(39,50,46,.03),0 8px 24px -12px rgba(39,50,46,.12);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    font-weight:400;line-height:1.75;font-size:16px}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 32px}
+  .serif{font-family:var(--serif)}
+  .accent{color:var(--accent)}
+
+  /* ── 顶栏 ── */
+  .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(150%) blur(12px);
+    background:rgba(238,242,239,.8);border-bottom:1px solid var(--line-2)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-family:var(--serif);font-weight:600;font-size:20px;letter-spacing:.02em}
+  .logo .d{color:var(--accent)}
+  .nav-links{display:flex;align-items:center;gap:30px;font-size:14.5px;color:var(--ink-2)}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-cta{border:1px solid var(--accent);color:var(--accent);padding:7px 18px;border-radius:999px;
+    font-size:14px;transition:.2s}
+  .nav-cta:hover{background:var(--accent);color:#fff}
+
+  /* ── Hero ── */
+  .hero{padding:84px 0 64px;text-align:center}
+  .eyebrow{display:inline-block;font-size:12.5px;letter-spacing:.22em;color:var(--accent);
+    background:var(--soft);padding:6px 16px;border-radius:999px;margin-bottom:26px}
+  h1.hero-t{font-family:var(--serif);font-weight:600;font-size:clamp(34px,5.2vw,56px);
+    line-height:1.28;letter-spacing:.01em;margin:0 auto;max-width:20ch}
+  .hero-sub{margin:24px auto 0;max-width:600px;font-size:17.5px;color:var(--ink-2);
+    font-weight:300;line-height:1.95}
+  .hero-cta{display:flex;gap:14px;justify-content:center;margin-top:36px}
+  .btn{padding:13px 28px;border-radius:999px;font-size:15px;transition:.22s;
+    border:1px solid transparent;font-weight:500}
+  .btn-primary{background:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--ink)}
+  .btn-ghost{border-color:var(--line);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+  /* ── 仿真应用窗口 ── */
+  .window{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);overflow:hidden;text-align:left}
+  .win-bar{display:flex;align-items:center;gap:8px;padding:13px 16px;
+    border-bottom:1px solid var(--line-2);background:#eef3f0}
+  .win-bar i{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .win-bar i:nth-child(1){background:#cdb4ab}.win-bar i:nth-child(2){background:#d8cda7}
+  .win-bar i:nth-child(3){background:#9cc0b4}
+  .win-title{margin-left:8px;font-size:12.5px;color:var(--ink-3);font-family:var(--mono)}
+
+  .app{max-width:980px;margin:54px auto 0}
+  .app-body{display:grid;grid-template-columns:1.18fr 1fr;min-height:380px}
+  .app-chat{display:flex;flex-direction:column;border-right:1px solid var(--line-2)}
+  .thread{flex:1;padding:22px 22px 8px;overflow:hidden}
+  .msg{display:flex;gap:12px;margin-bottom:18px}
+  .ava{flex:none;width:30px;height:30px;border-radius:9px;font-size:12px;display:flex;
+    align-items:center;justify-content:center;font-family:var(--mono);color:#fff}
+  .ava.u{background:var(--ink)} .ava.a{background:var(--accent)}
+  .bubble{font-size:14.5px;line-height:1.7;color:var(--ink);padding-top:3px}
+  .bubble b{font-weight:600}
+  .think{font-size:13px;color:var(--ink-3);font-style:italic;border-left:2px solid var(--line);
+    padding-left:12px;margin:0 0 6px}
+  .tool-card{margin-top:10px;border:1px solid var(--line);border-radius:10px;
+    background:#eef3f0;overflow:hidden;max-width:340px}
+  .tool-head{display:flex;align-items:center;gap:8px;padding:9px 13px;font-size:12px;
+    color:var(--ink-2);font-family:var(--mono)}
+  .dotg{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+  .cursor{display:inline-block;width:8px;height:15px;background:var(--accent);
+    vertical-align:-2px;margin-left:2px;animation:blink 1.1s step-end infinite;border-radius:1px}
+  @keyframes blink{50%{opacity:0}}
+
+  /* promptInput 输入条 */
+  .prompt-bar{margin:6px 16px 16px;border:1px solid var(--line);border-radius:14px;
+    background:var(--panel);box-shadow:var(--shadow-soft)}
+  .pb-text{padding:13px 15px 6px;font-size:14px;color:var(--ink-3)}
+  .pb-row{display:flex;align-items:center;gap:10px;padding:6px 10px 9px}
+  .pb-ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;
+    justify-content:center;color:var(--ink-3);border:1px solid transparent}
+  .pb-ic:hover{background:var(--soft);color:var(--accent)}
+  .pb-chip{font-size:12px;font-family:var(--mono);color:var(--ink-2);border:1px solid var(--line);
+    border-radius:999px;padding:4px 11px;display:flex;align-items:center;gap:6px}
+  .pb-chip .dotg{background:var(--tianqing)}
+  .pb-spacer{flex:1}
+  .pb-send{width:32px;height:32px;border-radius:9px;background:var(--accent);color:#fff;
+    display:flex;align-items:center;justify-content:center}
+
+  /* Canvas / Artifact 画布 */
+  .app-canvas{display:flex;flex-direction:column;background:#eef3f0}
+  .canvas-head{display:flex;align-items:center;justify-content:space-between;
+    padding:12px 16px;border-bottom:1px solid var(--line-2)}
+  .canvas-tabs{display:flex;gap:16px;font-size:13px;color:var(--ink-3)}
+  .canvas-tabs .on{color:var(--ink);position:relative;font-weight:500}
+  .canvas-tabs .on::after{content:"";position:absolute;left:0;right:0;bottom:-13px;height:2px;
+    background:var(--accent)}
+  .canvas-tools{display:flex;gap:6px;color:var(--ink-3)}
+  .canvas-tools svg{padding:4px;border-radius:6px}
+  .canvas-tools svg:hover{background:var(--soft);color:var(--accent)}
+  .artifact{flex:1;padding:18px}
+  .art-img{border-radius:12px;overflow:hidden;border:1px solid var(--line);
+    box-shadow:var(--shadow-soft)}
+  .art-cap{margin-top:11px;font-size:12px;color:var(--ink-3);font-family:var(--mono);
+    display:flex;align-items:center;gap:8px}
+
+  /* ── 能力分段 ── */
+  section.feat{padding:80px 0;border-top:1px solid var(--line-2)}
+  section.feat.alt{background:var(--bg-2)}
+  .feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .feat.rev .feat-grid{direction:rtl}.feat.rev .feat-grid>*{direction:ltr}
+  .kicker{font-size:12.5px;letter-spacing:.18em;color:var(--accent);text-transform:uppercase;
+    margin-bottom:14px;font-weight:500}
+  h2.feat-t{font-family:var(--serif);font-weight:600;font-size:31px;line-height:1.4;
+    margin:0 0 16px;letter-spacing:.01em}
+  .feat-p{font-size:16px;color:var(--ink-2);line-height:1.95;max-width:42ch}
+  .feat-p b{color:var(--ink);font-weight:500}
+  .mini{margin-top:18px;display:flex;flex-direction:column;gap:9px}
+  .mini div{display:flex;gap:10px;align-items:flex-start;font-size:14.5px;color:var(--ink-2)}
+  .mini svg{flex:none;margin-top:5px;color:var(--accent)}
+
+  .code{background:var(--code);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;
+    border:1px solid rgba(0,0,0,.25)}
+  .code .win-bar{background:var(--code-2);border-color:rgba(255,255,255,.05)}
+  .code .win-bar i:nth-child(1){background:#9c7e74}.code .win-bar i:nth-child(2){background:#9c9069}
+  .code .win-bar i:nth-child(3){background:#6f9a86}
+  .code .win-title{color:#7c8b82}
+  pre{margin:0;padding:20px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.85;
+    color:#cdd6cf;overflow-x:auto}
+  .k{color:#cba07f}.s{color:#a6c4a0}.c{color:#6b7a71;font-style:italic}
+  .f{color:#c9bd86}.p{color:#94bcc0}
+  .term pre{color:#c6d0c8}.prompt{color:var(--tianqing)}.flag{color:#c9bd86}.out{color:#84968c}
+
+  .triple{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px 24px;
+    box-shadow:var(--shadow-soft)}
+  .card .ic{width:38px;height:38px;border-radius:10px;background:var(--soft);
+    display:flex;align-items:center;justify-content:center;color:var(--accent);margin-bottom:16px}
+  .card h3{font-family:var(--serif);font-size:18px;margin:0 0 8px;font-weight:600}
+  .card p{font-size:14px;color:var(--ink-2);line-height:1.8;margin:0}
+
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+  .chip{font-family:var(--mono);font-size:13px;border:1px solid var(--line);border-radius:8px;
+    padding:7px 13px;color:var(--ink-2);background:var(--panel)}
+  .chip b{color:var(--accent);font-weight:400}
+
+  .center-head{text-align:center;max-width:620px;margin:0 auto 50px}
+  .center-head h2{font-family:var(--serif);font-size:31px;font-weight:600;margin:0 0 14px}
+  .center-head p{color:var(--ink-2);font-size:16px;margin:0}
+
+  .cta{padding:96px 0;text-align:center;background:var(--code);color:#eef3f0}
+  .cta h2{font-family:var(--serif);font-size:clamp(28px,3.8vw,42px);font-weight:600;margin:0 auto;
+    max-width:20ch;line-height:1.35}
+  .cta p{color:rgba(238,243,240,.62);margin:20px auto 36px;max-width:48ch;font-weight:300}
+  .cta .btn-primary{background:var(--tianqing);color:var(--code)}
+  .cta .btn-primary:hover{background:#fff}
+  .cta .btn-ghost{border-color:rgba(238,243,240,.25);color:#eef3f0}
+  .cta .btn-ghost:hover{border-color:#eef3f0}
+
+  footer{padding:46px 0;border-top:1px solid var(--line-2)}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;
+    font-size:13.5px;color:var(--ink-3);flex-wrap:wrap;gap:14px}
+  .seal{display:inline-flex;align-items:center;gap:9px;color:var(--ink-3)}
+  .seal b{width:22px;height:22px;border:1.5px solid var(--seal);color:var(--seal);
+    border-radius:5px;font-size:11px;display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);transform:rotate(-3deg)}
+
+  @media (max-width:860px){
+    .app-body{grid-template-columns:1fr}
+    .app-canvas{border-top:1px solid var(--line-2)}
+    .feat-grid{grid-template-columns:1fr;gap:34px}.feat.rev .feat-grid{direction:ltr}
+    .triple{grid-template-columns:1fr}
+    .nav-links a:not(.nav-cta){display:none}
+  }
+</style>
+</head>
+<body>
+
+  <div class="nav"><div class="wrap">
+    <div class="logo">pi<span class="d">·</span>web</div>
+    <div class="nav-links">
+      <a href="/docs/00-product-overview">概述</a>
+      <a href="/docs/03-architecture">架构</a>
+      <a href="/docs/13-http-api-reference">API</a>
+      <a class="nav-cta" href="/docs/01-quickstart">阅读文档 →</a>
+    </div>
+  </div></div>
+
+  <header class="hero"><div class="wrap">
+    <span class="eyebrow">PI&nbsp;CODING&nbsp;AGENT&nbsp;·&nbsp;INSTANT&nbsp;WEB&nbsp;UI</span>
+    <h1 class="hero-t serif">为 pi 智能体，即刻披上一袭 Web<span class="accent">。</span></h1>
+    <p class="hero-sub">
+      指向一处目录或仓库，pi-web 自动载入你的 agent——奉上流式对话、工具、
+      附件与 Canvas 画布，一套生产可用的前端，几近零额外工程。
+    </p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="/docs/01-quickstart">快速开始</a>
+      <a class="btn btn-ghost" href="/docs/00-product-overview">了解能力</a>
+    </div>
+
+    <!-- 真实应用界面：对话 + promptInput + Canvas/Artifact -->
+    <div class="app window">
+      <div class="win-bar"><i></i><i></i><i></i><span class="win-title">pi-web — aigc-agent</span></div>
+      <div class="app-body">
+
+        <!-- 左：对话 + 输入条 -->
+        <div class="app-chat">
+          <div class="thread">
+            <div class="msg">
+              <div class="ava u">你</div>
+              <div class="bubble">画一只宋代汝窑天青釉的山水意境，淡远些。</div>
+            </div>
+            <div class="msg">
+              <div class="ava a">π</div>
+              <div class="bubble">
+                <p class="think">构思构图：远山、月、留白，取天青釉色……</p>
+                好的，已生成并放到右侧画布。
+                <div class="tool-card">
+                  <div class="tool-head"><span class="dotg"></span>image_generation&nbsp;·&nbsp;completed</div>
+                </div>
+                <span class="cursor"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- promptInput -->
+          <div class="prompt-bar">
+            <div class="pb-text">追问或继续编辑这张图…</div>
+            <div class="pb-row">
+              <div class="pb-ic" title="附件">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5l-8.5 8.5a5 5 0 0 1-7-7l8.5-8.5a3.3 3.3 0 0 1 4.7 4.7L9 16.5a1.6 1.6 0 0 1-2.3-2.3l7.6-7.6"/></svg>
+              </div>
+              <span class="pb-chip"><span class="dotg"></span>opus&nbsp;·&nbsp;thinking</span>
+              <div class="pb-spacer"></div>
+              <div class="pb-send">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右：Canvas / Artifact -->
+        <div class="app-canvas">
+          <div class="canvas-head">
+            <div class="canvas-tabs"><span class="on">Canvas</span><span>代码</span><span>预览</span></div>
+            <div class="canvas-tools">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 15V3M7 10l5 5 5-5M5 21h14"/></svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7V4h3M20 7V4h-3M4 17v3h3M20 17v3h-3"/></svg>
+            </div>
+          </div>
+          <div class="artifact">
+            <div class="art-img">
+              <svg viewBox="0 0 400 250" width="100%" style="display:block">
+                <defs>
+                  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#cfe2da"/><stop offset="1" stop-color="#9cc0b4"/>
+                  </linearGradient>
+                  <linearGradient id="m1" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#88b1a3"/><stop offset="1" stop-color="#6f9a8b"/>
+                  </linearGradient>
+                  <linearGradient id="m2" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#5f8c7d"/><stop offset="1" stop-color="#4d7567"/>
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="250" fill="url(#sky)"/>
+                <circle cx="305" cy="64" r="28" fill="#f3f8f5" opacity="0.92"/>
+                <path d="M0 158 L72 104 L140 150 L226 86 L300 140 L360 108 L400 132 L400 250 L0 250 Z" fill="url(#m1)" opacity="0.92"/>
+                <path d="M0 205 L66 162 L150 200 L236 154 L322 196 L400 168 L400 250 L0 250 Z" fill="url(#m2)"/>
+                <g stroke="#ffffff" stroke-width="0.6" opacity="0.16" fill="none">
+                  <path d="M40 30 L120 70 M200 24 L150 90 M340 40 L300 110 M70 130 L130 150"/>
+                </g>
+                <path d="M250 150 q30 -10 60 8" stroke="#eef6f1" stroke-width="1" fill="none" opacity="0.5"/>
+              </svg>
+            </div>
+            <div class="art-cap"><span class="dotg" style="background:var(--accent)"></span>artifact · 天青釉山水 · 1024×640</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div></header>
+
+  <!-- 能力 1 · 双模式 -->
+  <section class="feat"><div class="wrap"><div class="feat-grid">
+    <div>
+      <div class="kicker">以 pi 为内核</div>
+      <h2 class="feat-t serif">pi 为核，一套协议，<br>Web 为其延展</h2>
+      <p class="feat-p">
+        内核始终是 <b>pi</b>。无论你的自定义 agent（经 SDK <b>runRpcMode</b>），还是通用
+        <b>pi --mode rpc</b>，对外都说<b>同一套 RPC 协议</b>；pi-web 只在协议之上为 pi
+        添一层 <b>Web 延展</b>——桥接完全复用，pi 的扩展、skills 与工具原样直通。
+      </p>
+      <div class="mini">
+        <div><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>pi 的 extensions / skills / 工具原样直通</div>
+        <div><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8l3.5 3.5L13 5"/></svg>一会话一进程，干净隔离</div>
+      </div>
+    </div>
+    <div class="code term">
+      <div class="win-bar"><i></i><i></i><i></i><span class="win-title">zsh</span></div>
+<pre><span class="c"># 指向任意 pi agent 源，即得一站</span>
+<span class="prompt">$</span> npx pi-web <span class="flag">./examples/aigc-agent</span>
+
+<span class="out">✓ 解析源 · 探测到 index.ts → custom 模式</span>
+<span class="out">✓ 会话进程已就绪</span>
+<span class="out">➜ http://localhost:3000</span></pre>
+    </div>
+  </div></div></section>
+
+  <!-- 能力 2 · 写 agent -->
+  <section class="feat alt rev"><div class="wrap"><div class="feat-grid">
+    <div>
+      <div class="kicker">defineAgent</div>
+      <h2 class="feat-t serif">写 agent，像描述一个对象</h2>
+      <p class="feat-p">
+        一个 <b>index.ts</b>，默认导出一份 <b>AgentDefinition</b>——系统提示、自定义工具、模型，皆为字段。
+        <b>defineAgent()</b> 只为类型推断，零运行时强依赖；省略 model 即继承你 pi 登录的默认。
+      </p>
+    </div>
+    <div class="code">
+      <div class="win-bar"><i></i><i></i><i></i><span class="win-title">index.ts</span></div>
+<pre><span class="k">import</span> { defineAgent } <span class="k">from</span> <span class="s">"@pi-web/agent-kit"</span>;
+<span class="k">import</span> { defineTool } <span class="k">from</span> <span class="s">"@earendil-works/pi-coding-agent"</span>;
+
+<span class="k">const</span> <span class="f">echo</span> = <span class="f">defineTool</span>({
+  name: <span class="s">"echo"</span>,
+  description: <span class="s">"Echo the text back."</span>,
+  <span class="k">async</span> <span class="f">execute</span>(_id, { text }) {
+    <span class="k">return</span> { content: [{ type: <span class="s">"text"</span>, text }] };
+  },
+});
+
+<span class="k">export default</span> <span class="f">defineAgent</span>({
+  <span class="c">// model 省略 → 继承 ~/.pi/agent 默认</span>
+  systemPrompt: <span class="s">"You are a helpful agent."</span>,
+  customTools: [echo],
+});</pre>
+    </div>
+  </div></div></section>
+
+  <!-- 能力 3 · 三件套 -->
+  <section class="feat"><div class="wrap">
+    <div class="center-head">
+      <h2 class="serif">视觉、附件、画布，开箱即用</h2>
+      <p>那些重复且昂贵的前端工程，pi-web 已替你备好。</p>
+    </div>
+    <div class="triple">
+      <div class="card">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h18v14H3z"/><path d="M3 15l5-5 4 4 3-3 6 6"/><circle cx="8.5" cy="9" r="1.5"/></svg></div>
+        <h3>视觉与附件</h3>
+        <p>图片/文件上传落对象存储、签名分发；base64 喂 LLM 识别，或文件交服务端工具处理。</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 4l6 6-10 10H4v-6L14 4z"/></svg></div>
+        <h3>工具与产出回流</h3>
+        <p>工具经 attachmentId 解析文件、执行、落库回流，产出可在下一轮再次引用——闭环。</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h11v14H4zM18 5h2v14h-2"/><path d="M7 9h5M7 13h5"/></svg></div>
+        <h3>Canvas 画布 / Artifact</h3>
+        <p>图像、报告、网页以独立画布呈现于侧栏，可切换代码与预览，并随对话实时更新。</p>
+      </div>
+    </div>
+  </div></section>
+
+  <!-- 能力 4 · provider -->
+  <section class="feat alt"><div class="wrap"><div class="feat-grid">
+    <div>
+      <div class="kicker">任意 Provider</div>
+      <h2 class="feat-t serif">内置 Provider 直连，<br>自定义 Provider 任接</h2>
+      <p class="feat-p">
+        pi-web 复用 pi 的 <b>Provider</b> 体系——一个 Provider 即一处模型来源。
+        <b>OpenAI</b>、<b>Anthropic</b>、Google 等内置 Provider 开箱直连；
+        自定义 Provider（如 <b>阿里云百炼</b>、DeepSeek 等国内服务，或 NewAPI 这类 OpenAI 兼容网关），
+        只需在 <b>~/.pi/agent/models.json</b> 登记 baseUrl 与 apiKey。模型即现于设置页
+        <b>按 provider 分组、可搜索</b>的下拉里。
+      </p>
+      <div class="chips">
+        <span class="chip">OpenAI</span>
+        <span class="chip">Anthropic</span>
+        <span class="chip">Google</span>
+        <span class="chip">阿里云百炼</span>
+        <span class="chip">DeepSeek</span>
+        <span class="chip">NewAPI</span>
+      </div>
+    </div>
+    <div class="code">
+      <div class="win-bar"><i></i><i></i><i></i><span class="win-title">~/.pi/agent/models.json</span></div>
+<pre>{
+  <span class="p">"providers"</span>: {
+    <span class="p">"my-gateway"</span>: {
+      <span class="p">"name"</span>: <span class="s">"My Gateway"</span>,
+      <span class="p">"baseUrl"</span>: <span class="s">"https://example.com/v1"</span>,
+      <span class="p">"apiKey"</span>: <span class="s">"sk-..."</span>,
+      <span class="p">"api"</span>: <span class="s">"openai-completions"</span>,
+      <span class="p">"models"</span>: [
+        { <span class="p">"id"</span>: <span class="s">"some-model"</span>, <span class="p">"name"</span>: <span class="s">"Some Model"</span> }
+      ]
+    }
+  }
+}</pre>
+    </div>
+  </div></div></section>
+
+  <!-- 能力 5 · 分层开放 -->
+  <section class="feat"><div class="wrap"><div class="feat-grid">
+    <div>
+      <div class="kicker">分层开放</div>
+      <h2 class="feat-t serif">可整站部署，亦可按需嵌入</h2>
+      <p class="feat-p">
+        语言无关的 HTTP/SSE 协议 + 单向收敛的分层包 + 渲染器注册表。从协议到组件逐层解耦——
+        既能整站起，也能把 <b>Headless hooks</b> 嵌进你自己的 React 栈。
+      </p>
+      <div class="chips">
+        <span class="chip"><b>@pi-web/</b>protocol</span>
+        <span class="chip"><b>@pi-web/</b>server</span>
+        <span class="chip"><b>@pi-web/</b>react</span>
+        <span class="chip"><b>@pi-web/</b>ui</span>
+        <span class="chip"><b>@pi-web/</b>agent-kit</span>
+      </div>
+    </div>
+    <div class="code">
+      <div class="win-bar"><i></i><i></i><i></i><span class="win-title">app.tsx</span></div>
+<pre><span class="k">import</span> { PiChat } <span class="k">from</span> <span class="s">"@pi-web/ui"</span>;
+<span class="k">import</span> { usePiSession } <span class="k">from</span> <span class="s">"@pi-web/react"</span>;
+
+<span class="k">export function</span> <span class="f">App</span>() {
+  <span class="k">const</span> session = <span class="f">usePiSession</span>({ source: <span class="s">"./my-agent"</span> });
+  <span class="k">return</span> &lt;<span class="f">PiChat</span> session={session} /&gt;;
+}</pre>
+    </div>
+  </div></div></section>
+
+  <section class="cta"><div class="wrap">
+    <h2 class="serif">把「写好一个 agent」到「它有了产品」的距离，压到接近零。</h2>
+    <p>五分钟，从一处目录到一个可对外的流式 Web 应用。</p>
+    <div class="hero-cta" style="margin-top:0">
+      <a class="btn btn-primary" href="/docs/01-quickstart">立即开始</a>
+      <a class="btn btn-ghost" href="/docs/02-core-concepts">读懂原理</a>
+    </div>
+  </div></section>
+
+  <footer><div class="wrap">
+    <div class="logo" style="font-size:17px">pi<span class="d">·</span>web</div>
+    <div class="seal"><b>印</b>&nbsp;素以为绚 · © BLKSAILS</div>
+  </div></footer>
+
+</body>
+</html>
