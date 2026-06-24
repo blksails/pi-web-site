@@ -54,17 +54,25 @@ pnpm dev          # 自动先 sync，再 next dev → http://localhost:3000/docs
 pnpm build:site   # → out/（/ 落地页，/docs Nextra）
 ```
 
-CI（GitHub Actions）建议：
+## CI/CD（GitHub Actions）
 
-```yaml
-# 在 pi-web-site 仓
-- run: |
-    git clone --depth=1 --filter=blob:none --sparse \
-      https://github.com/blksails/pi-web tmp-pi-web
-    cd tmp-pi-web && git sparse-checkout set docs/product && cd ..
-- run: PI_WEB_DOCS_SRC=tmp-pi-web/docs/product pnpm install && PI_WEB_DOCS_SRC=tmp-pi-web/docs/product pnpm build:site
-- run: npx wrangler pages deploy out --project-name=pi-web-site
-```
+已内置两个 workflow：
+
+| 文件 | 仓库 | 触发 | 作用 |
+| --- | --- | --- | --- |
+| `.github/workflows/deploy.yml` | **pi-web-site** | push main · `repository_dispatch(docs-updated)` · 手动 | 稀疏检出 pi-web 的 `docs/product` → `pnpm build:site` → 部署 CF Pages |
+| `.github/workflows/trigger-docs-deploy.yml` | **blksails/pi-web** | push main 改 `docs/product/**` | 跨仓 `repository_dispatch` 通知本站重新部署 |
+
+**上线前置（一次性）：**
+
+1. 把本仓推到 GitHub：`blksails/pi-web-site`。
+2. 在 **pi-web-site** 仓加 secrets：
+   - `CLOUDFLARE_API_TOKEN` —— Cloudflare 控制台「Edit Cloudflare Pages」模板 token；
+   - `CLOUDFLARE_ACCOUNT_ID` —— `c1cc6314f2222379ec14714b992ba3df`。
+3. 在 **blksails/pi-web** 仓加 secret：
+   - `DOCS_DEPLOY_TOKEN` —— fine-grained PAT，授予 `blksails/pi-web-site` 的 *Contents: Read and write*（用于 dispatch）。
+
+之后：改文档（pi-web）或改站点（pi-web-site）push 到 main，即自动构建并发布。
 
 - Cloudflare Pages 项目绑定自定义域 `pi-web.blksails.ai`。
 - 有状态的 pi-web **应用**部署在别处（如 `app.pi-web.blksails.ai`）；本站是纯静态，互不影响。

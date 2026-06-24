@@ -1,0 +1,60 @@
+name: Deploy site
+
+# 触发：
+#  - push 到本仓 main（落地页 / 主题 / 脚本变更）
+#  - repository_dispatch(docs-updated)：由 blksails/pi-web 文档变更跨仓触发
+#  - 手动 workflow_dispatch
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [docs-updated]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site (pi-web-site)
+        uses: actions/checkout@v4
+
+      # 文档唯一来源在 pi-web 仓（public），稀疏检出仅 docs/product
+      - name: Checkout pi-web docs (sparse)
+        uses: actions/checkout@v4
+        with:
+          repository: blksails/pi-web
+          ref: main
+          path: .pi-web-src
+          sparse-checkout: docs/product
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Build (sync docs + next export + landing)
+        env:
+          # sync-content.mjs 读此变量作为文档来源（替代默认 ../pi-web/docs/product）
+          PI_WEB_DOCS_SRC: ${{ github.workspace }}/.pi-web-src/docs/product
+        run: pnpm build:site
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy out --project-name=pi-web-site --branch=main
