@@ -353,7 +353,7 @@
     </div>
     <div class="code">
       <div class="win-bar"><i></i><i></i><i></i><span class="win-title">index.ts</span></div>
-<pre><span class="k">import</span> { defineAgent } <span class="k">from</span> <span class="s">"@blksails/agent-kit"</span>;
+<pre><span class="k">import</span> { defineAgent } <span class="k">from</span> <span class="s">"@blksails/pi-web-agent-kit"</span>;
 <span class="k">import</span> { defineTool } <span class="k">from</span> <span class="s">"@earendil-works/pi-coding-agent"</span>;
 
 <span class="k">const</span> <span class="f">echo</span> = <span class="f">defineTool</span>({
@@ -446,17 +446,17 @@
         既能整站起，也能把 <b>Headless hooks</b> 嵌进你自己的 React 栈。
       </p>
       <div class="chips">
-        <span class="chip"><b>@blksails/</b>protocol</span>
-        <span class="chip"><b>@blksails/</b>server</span>
-        <span class="chip"><b>@blksails/</b>react</span>
-        <span class="chip"><b>@blksails/</b>ui</span>
-        <span class="chip"><b>@blksails/</b>agent-kit</span>
+        <span class="chip"><b>@blksails/</b>pi-web-protocol</span>
+        <span class="chip"><b>@blksails/</b>pi-web-server</span>
+        <span class="chip"><b>@blksails/</b>pi-web-react</span>
+        <span class="chip"><b>@blksails/</b>pi-web-ui</span>
+        <span class="chip"><b>@blksails/</b>pi-web-agent-kit</span>
       </div>
     </div>
     <div class="code">
       <div class="win-bar"><i></i><i></i><i></i><span class="win-title">app.tsx</span></div>
-<pre><span class="k">import</span> { PiChat } <span class="k">from</span> <span class="s">"@blksails/ui"</span>;
-<span class="k">import</span> { usePiSession } <span class="k">from</span> <span class="s">"@blksails/react"</span>;
+<pre><span class="k">import</span> { PiChat } <span class="k">from</span> <span class="s">"@blksails/pi-web-ui"</span>;
+<span class="k">import</span> { usePiSession } <span class="k">from</span> <span class="s">"@blksails/pi-web-react"</span>;
 
 <span class="k">export function</span> <span class="f">App</span>() {
   <span class="k">const</span> session = <span class="f">usePiSession</span>({ source: <span class="s">"./my-agent"</span> });
