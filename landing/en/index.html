@@ -157,6 +157,11 @@
   .code .win-bar i:nth-child(1){background:#9c7e74}.code .win-bar i:nth-child(2){background:#9c9069}
   .code .win-bar i:nth-child(3){background:#6f9a86}
   .code .win-title{color:#7c8b82}
+  .copy-btn{margin-left:auto;font-family:var(--mono);font-size:12px;color:#9cc0b4;
+    background:rgba(156,192,180,.10);border:1px solid rgba(156,192,180,.22);
+    border-radius:7px;padding:4px 11px;cursor:pointer;transition:.2s}
+  .copy-btn:hover{background:rgba(156,192,180,.18);color:#bfe0d5}
+  .prompt-card pre{white-space:pre-wrap;word-break:break-word;color:#cdd8d0}
   pre{margin:0;padding:20px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.85;
     color:#cdd6cf;overflow-x:auto}
   .k{color:#cba07f}.s{color:#a6c4a0}.c{color:#6b7a71;font-style:italic}
@@ -496,6 +501,32 @@
     </div>
   </div></div></section>
 
+  <!-- AI-assisted dev · install the skill -->
+  <section class="feat alt" id="skill"><div class="wrap"><div class="feat-grid">
+    <div>
+      <div class="kicker">AI-assisted dev</div>
+      <h2 class="feat-t serif">Make Claude Code fluent in pi-web</h2>
+      <p class="feat-p">
+        The repo ships a <b>pi-web</b> dev skill — architecture map, command cheatsheet,
+        and the non-obvious gotchas. Send the prompt on the right to <b>Claude Code</b> and
+        it installs the skill into your project's local <b>.claude/skills/</b> folder,
+        auto-invoked whenever you work on pi-web.
+      </p>
+      <div class="chips">
+        <span class="chip">Architecture map</span>
+        <span class="chip">Command cheatsheet</span>
+        <span class="chip">Gotchas</span>
+      </div>
+    </div>
+    <div class="code prompt-card">
+      <div class="win-bar"><i></i><i></i><i></i><span class="win-title">Send to Claude Code</span><button class="copy-btn" type="button">Copy</button></div>
+<pre>Install the pi-web dev skill from github.com/blksails/pi-web:
+fetch .claude/skills/pi-web/SKILL.md from the repo
+into my project's .claude/skills/pi-web/SKILL.md.
+It auto-invokes when I work on pi-web.</pre>
+    </div>
+  </div></div></section>
+
   <section class="cta"><div class="wrap">
     <h2 class="serif">Shrink the distance from "I wrote an agent" to "it's a product" to nearly zero.</h2>
     <p>Five minutes, from a directory to a public-facing, streaming web app.</p>
@@ -520,5 +551,14 @@
     <div class="seal"><b>印</b>&nbsp;Plain silk, ready for color · © BLKSAILS</div>
   </div></footer>
 
+<script>
+/* Copy button: write the same card's <pre> text to the clipboard */
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest(".copy-btn");if(!b)return;
+  var card=b.closest(".code"),pre=card&&card.querySelector("pre");if(!pre)return;
+  function done(){b.textContent="Copied ✓";setTimeout(function(){b.textContent="Copy";},1600);}
+  try{navigator.clipboard.writeText(pre.innerText).then(done,function(){});}catch(_){}
+});
+</script>
 </body>
 </html>

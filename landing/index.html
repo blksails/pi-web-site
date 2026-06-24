@@ -157,6 +157,11 @@
   .code .win-bar i:nth-child(1){background:#9c7e74}.code .win-bar i:nth-child(2){background:#9c9069}
   .code .win-bar i:nth-child(3){background:#6f9a86}
   .code .win-title{color:#7c8b82}
+  .copy-btn{margin-left:auto;font-family:var(--mono);font-size:12px;color:#9cc0b4;
+    background:rgba(156,192,180,.10);border:1px solid rgba(156,192,180,.22);
+    border-radius:7px;padding:4px 11px;cursor:pointer;transition:.2s}
+  .copy-btn:hover{background:rgba(156,192,180,.18);color:#bfe0d5}
+  .prompt-card pre{white-space:pre-wrap;word-break:break-word;color:#cdd8d0}
   pre{margin:0;padding:20px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.85;
     color:#cdd6cf;overflow-x:auto}
   .k{color:#cba07f}.s{color:#a6c4a0}.c{color:#6b7a71;font-style:italic}
@@ -489,6 +494,31 @@
     </div>
   </div></div></section>
 
+  <!-- AI 辅助开发 · 安装 skill -->
+  <section class="feat alt" id="skill"><div class="wrap"><div class="feat-grid">
+    <div>
+      <div class="kicker">AI 辅助开发</div>
+      <h2 class="feat-t serif">让 Claude Code 懂 pi-web</h2>
+      <p class="feat-p">
+        仓库内置一个 <b>pi-web</b> 开发 skill——架构地图、命令速查、高频坑一应俱全。
+        把右侧这段提示词发给 <b>Claude Code</b>，它就把这个 skill 装进你项目的本地
+        <b>.claude/skills/</b> 目录，日后开发 pi-web 时自动唤起。
+      </p>
+      <div class="chips">
+        <span class="chip">架构地图</span>
+        <span class="chip">命令速查</span>
+        <span class="chip">高频坑</span>
+      </div>
+    </div>
+    <div class="code prompt-card">
+      <div class="win-bar"><i></i><i></i><i></i><span class="win-title">发给 Claude Code</span><button class="copy-btn" type="button">复制</button></div>
+<pre>安装 github.com/blksails/pi-web 的 pi-web 开发 skill：
+把仓库里的 .claude/skills/pi-web/SKILL.md
+取到我项目的 .claude/skills/pi-web/SKILL.md。
+装好后开发 pi-web 时自动唤起。</pre>
+    </div>
+  </div></div></section>
+
   <section class="cta"><div class="wrap">
     <h2 class="serif">把「写好一个 agent」到「它有了产品」的距离，压到接近零。</h2>
     <p>五分钟，从一处目录到一个可对外的流式 Web 应用。</p>
@@ -513,5 +543,14 @@
     <div class="seal"><b>印</b>&nbsp;素以为绚 · © BLKSAILS</div>
   </div></footer>
 
+<script>
+/* 复制按钮：把同卡片内 <pre> 文本写入剪贴板 */
+document.addEventListener("click",function(e){
+  var b=e.target.closest&&e.target.closest(".copy-btn");if(!b)return;
+  var card=b.closest(".code"),pre=card&&card.querySelector("pre");if(!pre)return;
+  function done(){b.textContent="已复制 ✓";setTimeout(function(){b.textContent="复制";},1600);}
+  try{navigator.clipboard.writeText(pre.innerText).then(done,function(){});}catch(_){}
+});
+</script>
 </body>
 </html>
