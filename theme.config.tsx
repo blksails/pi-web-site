@@ -1,9 +1,34 @@
 import React from "react";
+import { useRouter } from "next/router";
+
+/**
+ * 语言切换（静态导出下无 Next.js i18n，手动在 /docs ⇄ /en/docs 间跳转）。
+ * 当前在英文段 → 显示「中文」并去掉 /en 前缀；否则 → 显示「EN」并加 /en 前缀。
+ */
+function LanguageToggle() {
+  const { asPath } = useRouter();
+  const isEn = asPath === "/en" || asPath.startsWith("/en/");
+  const target = isEn
+    ? asPath.replace(/^\/en/, "") || "/"
+    : `/en${asPath === "/" ? "/docs" : asPath}`;
+  return (
+    <a
+      href={target}
+      aria-label={isEn ? "切换到中文" : "Switch to English"}
+      style={{ fontSize: 14, fontWeight: 500, padding: "0 8px", whiteSpace: "nowrap" }}
+    >
+      {isEn ? "中文" : "EN"}
+    </a>
+  );
+}
 
 /**
  * Nextra 文档主题配置。配色呼应落地页的宋瓷青釉（梅子青 #5f8c7d）。
  */
 const config = {
+  navbar: {
+    extraContent: LanguageToggle,
+  },
   logo: (
     <span style={{ fontFamily: "Noto Serif SC, serif", fontWeight: 600, fontSize: 18 }}>
       pi<span style={{ color: "#5f8c7d" }}>·</span>web
