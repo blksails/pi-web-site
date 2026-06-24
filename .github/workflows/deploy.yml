@@ -34,9 +34,8 @@ jobs:
           path: .pi-web-src
           sparse-checkout: docs/product
 
+      # 版本取自 package.json 的 packageManager(pnpm@9.12.0)，勿再指定 version 以免冲突
       - uses: pnpm/action-setup@v4
-        with:
-          version: 9
 
       - uses: actions/setup-node@v4
         with:
