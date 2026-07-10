@@ -203,12 +203,46 @@
     border-radius:5px;font-size:11px;display:flex;align-items:center;justify-content:center;
     font-family:var(--serif);transform:rotate(-3deg)}
 
+  /* 下载区 */
+  .dl-head{text-align:center;margin-bottom:42px}
+  .dl-head .feat-p{margin-left:auto;margin-right:auto;max-width:52ch}
+  .dl-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:38px;align-items:stretch}
+  .dl-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:26px 26px 22px;box-shadow:var(--shadow-soft);display:flex;flex-direction:column}
+  .dl-card-h{display:flex;align-items:center;gap:11px;font-family:var(--serif);
+    font-size:20px;color:var(--ink);margin-bottom:8px}
+  .ver{font-family:var(--mono);font-size:11.5px;color:var(--accent);background:var(--soft);
+    padding:3px 9px;border-radius:999px;letter-spacing:.02em}
+  .dl-card>p{font-size:14.5px;color:var(--ink-2);line-height:1.85;margin:0 0 20px}
+  .dl-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .dl-b{padding:12px 15px;border-radius:12px;border:1px solid var(--line);
+    color:var(--ink);text-decoration:none;transition:.2s;display:flex;flex-direction:column;gap:3px}
+  .dl-b:hover{border-color:var(--accent);color:var(--accent)}
+  .dl-b .os{font-size:13.5px;font-weight:500}
+  .dl-b .arch{font-size:11px;color:var(--ink-3);font-family:var(--mono)}
+  .dl-b:hover .arch{color:var(--accent-2)}
+  .dl-b.is-current{border-color:var(--accent);background:var(--soft)}
+  .dl-b.is-current .arch{color:var(--accent)}
+  .dl-note{font-size:12.5px;color:var(--ink-3);line-height:1.85;margin:18px 0 0;
+    padding-top:15px;border-top:1px solid var(--line-2)}
+  .dl-note b{color:var(--ink-2);font-weight:500}
+  .dl-foot{margin-top:auto;padding-top:14px}
+  .dl-all{font-size:13px;color:var(--accent);text-decoration:none}
+  .dl-all:hover{color:var(--ink)}
+  .dl-cli{display:flex;flex-direction:column}
+  .dl-cli .code{flex:1;display:flex;flex-direction:column}
+  .dl-cli .code pre{flex:1}
+  .dl-cli-note{font-size:12.5px;color:var(--ink-3);line-height:1.85;margin:16px 2px 0}
+  .dl-cli-note code{font-family:var(--mono);font-size:12px;color:var(--ink-2);
+    background:var(--soft);padding:1px 6px;border-radius:5px}
+
   @media (max-width:860px){
     .app-body{grid-template-columns:1fr}
     .app-canvas{border-top:1px solid var(--line-2)}
     .feat-grid{grid-template-columns:1fr;gap:34px}.feat.rev .feat-grid{direction:ltr}
     .triple{grid-template-columns:1fr}
     .nav-links a:not(.nav-cta){display:none}
+    .dl-grid{grid-template-columns:1fr;gap:26px}
   }
 </style>
 <script>
@@ -239,8 +273,9 @@
     <div class="nav-links">
       <a href="/docs/00-product-overview">概述</a>
       <a href="/docs/03-architecture">架构</a>
-      <a href="/docs/13-http-api-reference">API</a>
+      <a href="/docs/24-http-api-reference">API</a>
       <a href="#skill">装 Skill</a>
+      <a href="#download">下载</a>
       <a class="nav-ic" href="https://github.com/blksails/pi-web" target="_blank" rel="noopener" aria-label="GitHub">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.8 18 5.1 18 5.1c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.3.8 1 .8 2.1v3.1c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
       </a>
@@ -521,6 +556,62 @@
     </div>
   </div></div></section>
 
+  <section class="feat" id="download"><div class="wrap">
+    <div class="dl-head">
+      <div class="kicker">下载</div>
+      <h2 class="feat-t serif">两种取用方式</h2>
+      <p class="feat-p">
+        桌面版开箱即用，双击就跑；命令行则让任何一处目录，即刻成为一个可对外的 Web 应用。
+      </p>
+    </div>
+    <div class="dl-grid">
+      <div class="dl-card">
+        <div class="dl-card-h">桌面版 <span class="ver">v0.2.0</span></div>
+        <p>基于 Tauri 的原生外壳，内置 Node 运行时——无需预装任何环境，下载即用。</p>
+        <div class="dl-btns">
+          <a class="dl-b" data-os="mac-arm" href="https://github.com/blksails/pi-web/releases/download/v0.2.0/pi-web_0.2.0_aarch64.dmg">
+            <span class="os">macOS</span><span class="arch">Apple 芯片 · dmg</span>
+          </a>
+          <a class="dl-b" data-os="mac-x64" href="https://github.com/blksails/pi-web/releases/download/v0.2.0/pi-web_0.2.0_x64.dmg">
+            <span class="os">macOS</span><span class="arch">Intel · dmg</span>
+          </a>
+          <a class="dl-b" data-os="win" href="https://github.com/blksails/pi-web/releases/download/v0.2.0/pi-web_0.2.0_x64-setup.exe">
+            <span class="os">Windows</span><span class="arch">x64 · exe</span>
+          </a>
+          <a class="dl-b" data-os="linux" href="https://github.com/blksails/pi-web/releases/download/v0.2.0/pi-web_0.2.0_amd64.AppImage">
+            <span class="os">Linux</span><span class="arch">x86_64 · AppImage</span>
+          </a>
+        </div>
+        <p class="dl-note">
+          安装包<b>尚未做代码签名</b>，首次打开会被系统拦下：macOS 提示「无法验证开发者」，
+          到<b>系统设置 › 隐私与安全性</b>点「仍要打开」；Windows 的 SmartScreen 提示时，
+          点<b>更多信息 › 仍要运行</b>。Linux 的 AppImage 需先 <code>chmod +x</code>。
+        </p>
+        <div class="dl-foot">
+          <a class="dl-all" href="https://github.com/blksails/pi-web/releases/latest" target="_blank" rel="noopener">查看全部版本与更新日志 →</a>
+        </div>
+      </div>
+
+      <div class="dl-cli">
+        <div class="code">
+          <div class="win-bar"><i></i><i></i><i></i><span class="win-title">命令行</span><button class="copy-btn" type="button">复制</button></div>
+<pre># 全局安装
+npm i -g @blksails/pi-web
+
+# 指向任一 agent 目录，起一个 Web 应用
+pi-web ./my-agent
+
+# 或直接把当前目录当作 agent
+cd my-agent &amp;&amp; pi-web</pre>
+        </div>
+        <p class="dl-cli-note">
+          需要 Node <code>&gt;=22.19.0</code>。CLI 自带完整的前端产物与服务端，
+          不依赖仓库源码；<code>--port</code> 改端口，<code>--watch</code> 在 agent 改动时热重载。
+        </p>
+      </div>
+    </div>
+  </div></section>
+
   <section class="cta"><div class="wrap">
     <h2 class="serif">把「写好一个 agent」到「它有了产品」的距离，压到接近零。</h2>
     <p>五分钟，从一处目录到一个可对外的流式 Web 应用。</p>
@@ -553,6 +644,26 @@ document.addEventListener("click",function(e){
   function done(){b.textContent="已复制 ✓";setTimeout(function(){b.textContent="复制";},1600);}
   try{navigator.clipboard.writeText(pre.innerText).then(done,function(){});}catch(_){}
 });
+
+/* 下载区：高亮访客当前平台。判不出就不高亮，四个按钮一律可点。 */
+(function(){
+  var ua=navigator.userAgent||"",p=navigator.platform||"",os=null;
+  if(/Win/i.test(p)||/Windows/i.test(ua)) os="win";
+  else if(/Mac/i.test(p)||/Mac OS X/i.test(ua)){
+    /* Apple 芯片：navigator.platform 仍报 MacIntel，靠 maxTouchPoints 与 WebGL 渲染器旁证 */
+    var arm=navigator.maxTouchPoints>1;
+    if(!arm){try{
+      var gl=document.createElement("canvas").getContext("webgl");
+      var dbg=gl&&gl.getExtension("WEBGL_debug_renderer_info");
+      if(dbg) arm=/Apple (M|GPU)/i.test(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)||"");
+    }catch(_){}}
+    os=arm?"mac-arm":"mac-x64";
+  }
+  else if(/Linux|X11/i.test(p)&&!/Android/i.test(ua)) os="linux";
+  if(!os)return;
+  var el=document.querySelector('.dl-b[data-os="'+os+'"]');
+  if(el)el.classList.add("is-current");
+})();
 </script>
 </body>
 </html>
