@@ -3,12 +3,14 @@ name: Deploy site
 # 触发：
 #  - push 到本仓 main（落地页 / 主题 / 脚本变更）
 #  - repository_dispatch(docs-updated)：由 blksails/pi-web 文档变更跨仓触发
+#  - repository_dispatch(release-published)：由 blksails/pi-web 发版后跨仓触发
+#    （下载页的版本数据是构建期固化的，不重新构建就看不到新版本）
 #  - 手动 workflow_dispatch
 on:
   push:
     branches: [main]
   repository_dispatch:
-    types: [docs-updated]
+    types: [docs-updated, release-published]
   workflow_dispatch:
 
 permissions:
