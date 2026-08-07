@@ -36,6 +36,10 @@ async function copyDir(src, dst) {
 
 async function main() {
   run("node scripts/sync-content.mjs");
+  // 下载页的版本数据在构建期固化(站点是纯静态导出,页面没有服务端)。
+  // 取数失败且已有快照时 fetch-releases 会告警并沿用旧快照,不中断构建。
+  run("node scripts/fetch-releases.mjs");
+  run("node scripts/build-downloads.mjs");
   run("next build");
 
   // 落地页覆盖到 out/ 根（覆盖 Nextra 的占位 index.html）
@@ -44,6 +48,7 @@ async function main() {
   console.log("✓ 站点就绪：out/  → 部署到 Cloudflare Pages");
   console.log("  /        落地页（landing/index.html）");
   console.log("  /docs/   Nextra 文档");
+  console.log("  /downloads.html  下载页(中) · /en/downloads.html(英)");
 }
 
 main().catch((e) => {

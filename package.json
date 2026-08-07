@@ -11,7 +11,9 @@
     "build": "next build",
     "build:site": "node scripts/build-site.mjs",
     "start": "next start",
-    "clean": "rm -rf .next out pages/docs"
+    "clean": "rm -rf .next out pages/docs",
+    "releases": "node scripts/fetch-releases.mjs",
+    "build:downloads": "node scripts/fetch-releases.mjs && node scripts/build-downloads.mjs"
   },
   "dependencies": {
     "next": "^14.2.5",

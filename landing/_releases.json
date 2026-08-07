@@ -1,0 +1,254 @@
+[
+  {
+    "tag": "v0.3.4",
+    "version": "0.3.4",
+    "prerelease": false,
+    "publishedAt": "2026-08-07T09:54:09Z",
+    "notes": "",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.3.4",
+    "assets": [
+      {
+        "name": "pi-web_0.3.4_aarch64.dmg",
+        "os": "macOS",
+        "arch": "Apple 芯片 · dmg",
+        "key": "mac-arm",
+        "size": 57854314,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.4/pi-web_0.3.4_aarch64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.4/pi-web_0.3.4_aarch64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.4_x64.dmg",
+        "os": "macOS",
+        "arch": "Intel · dmg",
+        "key": "mac-x64",
+        "size": 59807448,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.4/pi-web_0.3.4_x64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.4/pi-web_0.3.4_x64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.4_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 45933019,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.4/pi-web_0.3.4_x64-setup.exe",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.4/pi-web_0.3.4_x64-setup.exe"
+      },
+      {
+        "name": "pi-web_0.3.4_amd64.AppImage",
+        "os": "Linux",
+        "arch": "x86_64 · AppImage",
+        "key": "linux",
+        "size": 138414584,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.4/pi-web_0.3.4_amd64.AppImage",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.4/pi-web_0.3.4_amd64.AppImage"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.3",
+    "version": "0.3.3",
+    "prerelease": false,
+    "publishedAt": "2026-08-07T09:30:08Z",
+    "notes": "",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.3.3",
+    "assets": [
+      {
+        "name": "pi-web_0.3.3_aarch64.dmg",
+        "os": "macOS",
+        "arch": "Apple 芯片 · dmg",
+        "key": "mac-arm",
+        "size": 57840140,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.3/pi-web_0.3.3_aarch64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.3/pi-web_0.3.3_aarch64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.3_x64.dmg",
+        "os": "macOS",
+        "arch": "Intel · dmg",
+        "key": "mac-x64",
+        "size": 59793780,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.3/pi-web_0.3.3_x64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.3/pi-web_0.3.3_x64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.3_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 45935098,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.3/pi-web_0.3.3_x64-setup.exe",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.3/pi-web_0.3.3_x64-setup.exe"
+      },
+      {
+        "name": "pi-web_0.3.3_amd64.AppImage",
+        "os": "Linux",
+        "arch": "x86_64 · AppImage",
+        "key": "linux",
+        "size": 138402296,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.3/pi-web_0.3.3_amd64.AppImage",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.3/pi-web_0.3.3_amd64.AppImage"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.2",
+    "version": "0.3.2",
+    "prerelease": false,
+    "publishedAt": "2026-08-07T03:52:36Z",
+    "notes": "## Highlights\n\n- **Isolated Panes**：右侧面板收敛为唯一 pane 机制（废弃 `panelRight`）；host-builtin panes、guest 共享状态、hide-vs-destroy 生命周期、tabs 边车与跨 realm 同步\n- **桌面 Pane 稳定性**：chrome 遮挡/空渲染排查与修复（几何可判别、show 等几何、宿主强制重绘方案 A、overlay 以 Tauri `innerPosition` 为原点）\n- **AIGC Video Studio**：agent 工作流并入 `aigc-agent`；隔离 AIGC pane 桌面流（PR #24/#26/#30 等）\n- **多网关 / Provider**：实例身份·目录·凭据·路由；自定义 provider 配置域；Cloudflare AIGC 图像兼容通路（PR #22）\n- **宿主契约 v1**：`LocalWorkspace`、capabilities 组装、config/stores 端口化；core/adapters 拆包；runner 内置自解析 + ready 帧上报\n- **MCP & Publish**：内置 MCP 客户端 + `mcp` 配置域；发布期抽取 source settings 并内联签名 manifest（`@blksails/pi-web` 0.3.2）\n- **CLI / 构建**：`pi-web build` 统一 webext/pane（含预渲染 HTML pane 分派）\n- **会话与索引**：会话列表全局化；session-meta-index（SQLite + Workspace）；窗口标题与会话标题同步；auto-title 去附件引用噪声\n- **UI**：侧栏壳/账号菜单/对话密度重设计；monochrome 媒体控件与 liquid glass chrome；双滚动条与 tab park 修复\n- **桌面产品能力**：混合 agent 源、凭据热刷新、登录跨重启与 cloud 默认接入、受控浏览器 Pane、pi 资源管理与模板工具；macOS 编译/签名链恢复可发布\n\n## Changes\n\n相对 **v0.3.0**，本标签包含 **477** 个提交（`v0.3.0..HEAD`）。\n\n### Panes & 工作台\n- panes-only-right-panel / host-builtin-panes / pane-lifecycle hide-vs-destroy\n- 几何链路可取证、show 前置「几何已送达」、畸形声明容忍\n- panes-kit：子 WebView tabs 边车、跨 realm 状态；宿主内置与日志改为 inline 并由 Host 统一包装\n- 关 tab → park 进「更多」，避免误销毁\n\n### AIGC / Agent 示例\n- Video Studio 工作流；视频工作室并入 aigc-agent\n- 隔离宿主入口、素材域写命令、promptToolbar 回归、发布链编译自检\n- 网关 compat 图像通路归属 cloudflare + 模型级白名单\n\n### Provider / 网关 / 会话\n- multi-gateway-providers：多实例并存与前端统一目录\n- session source 协议透传；session-meta-index 帽子与工作状态\n- auto_retry 致命 provider 错误 fail-fast\n\n### 平台内核\n- host-contract-ports（Workspace / capabilities / 一致性套件）\n- core-package / adapters-package 提取与兼容层收窄\n- runner 自解析内置扩展；预编译 cache key 混入 entry 身份\n- 内置 MCP 客户端（protocol/tool-kit/server 0.6.0 线）\n\n### Publish / CLI / 测试\n- publish source settings → 签名 manifest 内联\n- `pi-web build`（webext/pane + 预渲染 HTML）\n- CI Linux 全量回归门；`pnpm test --no-bail`；多处假绿/串行饿死修复\n\n### UI\n- 侧栏启动轨、账号菜单、Composer/工具栏、状态条全宽、liquid glass\n- 会话区双滚动条消除；资源控件与媒体卡片密度微调\n\n主要 PR（抽样）：#11–#17、#20、#22–#26、#29–#30 等。\n\n## Desktop\n\n- 推送 **`v*`** 标签会触发 [`.github/workflows/desktop-release.yml`](.github/workflows/desktop-release.yml)：按 target triple 构建 **dmg / nsis / AppImage**，**package → smoke（真实会话）→ release** 通过后才把产物挂到 GitHub Release。\n- 本区间桌面相关：macOS 编译与签名链修复、hybrid agent 源、线上源可安装运行、凭据热刷新、登录态跨重启、云端默认接入地址（仅桌面壳）、pane chrome/布局/resize 稳定性、受控浏览器 Pane。\n- 说明：工作流注释写明 macOS 形态经端到端验证更充分；Windows/Linux 目标以该工作流真实跑通为准。\n\n## Install\n\n**npm / pnpm 包**（根包名 `@blksails/pi-web`，版本 **0.3.2**）：\n\n```bash\nnpm i @blksails/pi-web@0.3.2\n# 或\npnpm add @blksails/pi-web@0.3.2\n```\n\n**桌面安装包**：打 `v0.3.2` 标签并完成 GHA smoke 后，在本 Release 的 Assets 中下载对应平台的 dmg / nsis / AppImage（就绪时间取决于矩阵构建与冒烟）。\n\n**CLI 提示**：发布与本地构建可用 `pi-web build` 统一 agent 的 webext/pane 产物；publish 链路现支持 source settings 内联进签名 manifest。",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.3.2",
+    "assets": [
+      {
+        "name": "pi-web_0.3.0_aarch64.dmg",
+        "os": "macOS",
+        "arch": "Apple 芯片 · dmg",
+        "key": "mac-arm",
+        "size": 57828294,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.2/pi-web_0.3.0_aarch64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.0_x64.dmg",
+        "os": "macOS",
+        "arch": "Intel · dmg",
+        "key": "mac-x64",
+        "size": 59781061,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.2/pi-web_0.3.0_x64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.0_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 45914843,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.2/pi-web_0.3.0_x64-setup.exe"
+      },
+      {
+        "name": "pi-web_0.3.0_amd64.AppImage",
+        "os": "Linux",
+        "arch": "x86_64 · AppImage",
+        "key": "linux",
+        "size": 138390008,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.2/pi-web_0.3.0_amd64.AppImage"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.1",
+    "version": "0.2.1",
+    "prerelease": false,
+    "publishedAt": "2026-07-10T12:22:15Z",
+    "notes": "",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.2.1",
+    "assets": [
+      {
+        "name": "pi-web_0.2.1_aarch64.dmg",
+        "os": "macOS",
+        "arch": "Apple 芯片 · dmg",
+        "key": "mac-arm",
+        "size": 44576063,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.2.1/pi-web_0.2.1_aarch64.dmg"
+      },
+      {
+        "name": "pi-web_0.2.1_x64.dmg",
+        "os": "macOS",
+        "arch": "Intel · dmg",
+        "key": "mac-x64",
+        "size": 46474699,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.2.1/pi-web_0.2.1_x64.dmg"
+      },
+      {
+        "name": "pi-web_0.2.1_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 33060534,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.2.1/pi-web_0.2.1_x64-setup.exe"
+      },
+      {
+        "name": "pi-web_0.2.1_amd64.AppImage",
+        "os": "Linux",
+        "arch": "x86_64 · AppImage",
+        "key": "linux",
+        "size": 125442552,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.2.1/pi-web_0.2.1_amd64.AppImage"
+      }
+    ]
+  },
+  {
+    "tag": "v0.2.0",
+    "version": "0.2.0",
+    "prerelease": false,
+    "publishedAt": "2026-07-10T10:48:21Z",
+    "notes": "",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.2.0",
+    "assets": [
+      {
+        "name": "pi-web_0.2.0_aarch64.dmg",
+        "os": "macOS",
+        "arch": "Apple 芯片 · dmg",
+        "key": "mac-arm",
+        "size": 43858074,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.2.0/pi-web_0.2.0_aarch64.dmg"
+      },
+      {
+        "name": "pi-web_0.2.0_x64.dmg",
+        "os": "macOS",
+        "arch": "Intel · dmg",
+        "key": "mac-x64",
+        "size": 45763085,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.2.0/pi-web_0.2.0_x64.dmg"
+      },
+      {
+        "name": "pi-web_0.2.0_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 32926600,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.2.0/pi-web_0.2.0_x64-setup.exe"
+      },
+      {
+        "name": "pi-web_0.2.0_amd64.AppImage",
+        "os": "Linux",
+        "arch": "x86_64 · AppImage",
+        "key": "linux",
+        "size": 125307384,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.2.0/pi-web_0.2.0_amd64.AppImage"
+      }
+    ]
+  },
+  {
+    "tag": "v0.1.3",
+    "version": "0.1.3",
+    "prerelease": false,
+    "publishedAt": "2026-07-07T11:08:48Z",
+    "notes": "",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.1.3",
+    "assets": [
+      {
+        "name": "pi-web-0.1.3.AppImage",
+        "os": "Linux",
+        "arch": "x86_64 · AppImage",
+        "key": "linux",
+        "size": 387961523,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.1.3/pi-web-0.1.3.AppImage"
+      },
+      {
+        "name": "pi-web-0.1.3-arm64.dmg",
+        "os": "pi-web-0.1.3-arm64.dmg",
+        "arch": "",
+        "key": "other",
+        "size": 365665804,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.1.3/pi-web-0.1.3-arm64.dmg"
+      },
+      {
+        "name": "pi-web.Setup.0.1.3.exe",
+        "os": "pi-web.Setup.0.1.3.exe",
+        "arch": "",
+        "key": "other",
+        "size": 188466926,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.1.3/pi-web.Setup.0.1.3.exe"
+      }
+    ]
+  }
+]

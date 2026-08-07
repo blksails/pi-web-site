@@ -11,3 +11,9 @@ next-env.d.ts
 
 # 系统
 .DS_Store
+
+# 下载页由 scripts/build-downloads.mjs 在构建期生成(数据取自 landing/_releases.json)。
+# 生成物不入库,避免每次构建产生噪音 diff;_releases.json 则**入库**——
+# 它是取数失败/API 限流时的保底快照,fetch-releases.mjs 会沿用它而不中断构建。
+landing/downloads.html
+landing/en/downloads.html
