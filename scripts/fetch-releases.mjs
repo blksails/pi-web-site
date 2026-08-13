@@ -48,15 +48,38 @@ async function ghFetch(url) {
   return res.json();
 }
 
-/** 探测 OSS 上是否真有这个资产(镜像是 v0.3.3 之后才有的)。 */
-async function ossHas(tag, assetName) {
-  const url = `${OSS_BASE}/releases/${tag}/${assetName}`;
+/**
+ * OSS 上同一资产可能落在两个布局之一:
+ *   - 扁平:  releases/<tag>/<file>                 (v0.3.3 / v0.3.4)
+ *   - 分目录:releases/<tag>/{dmg|nsis|appimage}/<file>  (v0.3.5 起,tauri bundle 子目录被 cp -r 带上去)
+ * 两个都 HEAD 一遍,命中才返回,避免页面上出现 404 死链。
+ */
+function ossCandidates(tag, assetName) {
+  const base = `${OSS_BASE}/releases/${tag}`;
+  const sub = /\.dmg$/i.test(assetName)
+    ? "dmg"
+    : /\.AppImage$/i.test(assetName)
+      ? "appimage"
+      : /\.exe$/i.test(assetName)
+        ? "nsis"
+        : null;
+  return [`${base}/${assetName}`, ...(sub ? [`${base}/${sub}/${assetName}`] : [])];
+}
+
+async function headOk(url) {
   try {
     const res = await fetch(url, { method: "HEAD" });
-    return res.ok ? url : undefined;
+    return res.ok;
   } catch {
-    return undefined;
+    return false;
   }
+}
+
+async function ossHas(tag, assetName) {
+  for (const url of ossCandidates(tag, assetName)) {
+    if (await headOk(url)) return url;
+  }
+  return undefined;
 }
 
 async function main() {
@@ -81,19 +104,20 @@ async function main() {
     const assets = (r.assets ?? []).filter((a) => ASSET_RE.test(a.name));
     if (assets.length === 0) continue;
 
-    const items = [];
-    for (const a of assets) {
-      const meta = describeAsset(a.name);
-      items.push({
-        name: a.name,
-        os: meta.os,
-        arch: meta.arch,
-        key: meta.key,
-        size: a.size,
-        github: a.browser_download_url,
-        oss: await ossHas(r.tag_name, a.name),
-      });
-    }
+    const items = await Promise.all(
+      assets.map(async (a) => {
+        const meta = describeAsset(a.name);
+        return {
+          name: a.name,
+          os: meta.os,
+          arch: meta.arch,
+          key: meta.key,
+          size: a.size,
+          github: a.browser_download_url,
+          oss: await ossHas(r.tag_name, a.name),
+        };
+      }),
+    );
     // 平台顺序固定，避免 GitHub 返回顺序变动导致页面按钮乱跳。
     const order = { "mac-arm": 0, "mac-x64": 1, win: 2, linux: 3, other: 4 };
     items.sort((x, y) => (order[x.key] ?? 9) - (order[y.key] ?? 9));

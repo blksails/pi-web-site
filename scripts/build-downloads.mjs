@@ -110,6 +110,23 @@ const EXTRA_CSS = `
   .rel-hist>summary .hint{font-family:var(--sans);font-size:12px;color:var(--ink-3)}
 `;
 
+/** 把落地页的版本号与四个平台按钮 href 覆写成最新 Release(OSS 优先)。 */
+function patchLanding(html, latest) {
+  const hrefByKey = Object.fromEntries(
+    latest.assets.map((a) => [a.key, a.oss ?? a.github]),
+  );
+  let out = html.replace(
+    /<span class="ver">[^<]*<\/span>/,
+    `<span class="ver">${latest.tag}</span>`,
+  );
+  out = out.replace(
+    /(<a class="dl-b" data-os=")([^"]+)(" href=")[^"]+(")/g,
+    (all, pre, key, mid, post) =>
+      hrefByKey[key] ? `${pre}${key}${mid}${hrefByKey[key]}${post}` : all,
+  );
+  return out;
+}
+
 function fmtSize(bytes) {
   if (typeof bytes !== "number" || bytes <= 0) return "";
   return `${(bytes / 1048576).toFixed(0)} MB`;
@@ -237,10 +254,20 @@ async function main() {
     "utf8",
   );
 
+  // 落地页下载按钮是手写 HTML,版本号与 href 会过期。每次构建用最新 Release 覆写,
+  // 主链接优先走 OSS 国内镜像,没有镜像才留 GitHub。
+  const latest = releases[0];
+  for (const rel of ["index.html", path.join("en", "index.html")]) {
+    const p = path.join(LANDING, rel);
+    const before = await fs.readFile(p, "utf8");
+    const after = patchLanding(before, latest);
+    if (after !== before) await fs.writeFile(p, after, "utf8");
+  }
+
   const mirrored = releases.filter((r) => r.assets.some((a) => a.oss !== undefined)).length;
   console.log(
     `[build-downloads] ✓ downloads.html + en/downloads.html` +
-      `(${releases.length} 个版本,${mirrored} 个走镜像)`,
+      `(${releases.length} 个版本,${mirrored} 个走镜像;落地页 → ${latest.tag})`,
   );
 }
 

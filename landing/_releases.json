@@ -1,5 +1,179 @@
 [
   {
+    "tag": "v0.3.9",
+    "version": "0.3.9",
+    "prerelease": false,
+    "publishedAt": "2026-08-11T10:05:17Z",
+    "notes": "",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.3.9",
+    "assets": [
+      {
+        "name": "pi-web_0.3.9_aarch64.dmg",
+        "os": "macOS",
+        "arch": "Apple 芯片 · dmg",
+        "key": "mac-arm",
+        "size": 78595905,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.9/pi-web_0.3.9_aarch64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.9/dmg/pi-web_0.3.9_aarch64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.9_x64.dmg",
+        "os": "macOS",
+        "arch": "Intel · dmg",
+        "key": "mac-x64",
+        "size": 80541362,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.9/pi-web_0.3.9_x64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.9/dmg/pi-web_0.3.9_x64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.9_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 66354424,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.9/pi-web_0.3.9_x64-setup.exe",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.9/nsis/pi-web_0.3.9_x64-setup.exe"
+      },
+      {
+        "name": "pi-web_0.3.9_amd64.AppImage",
+        "os": "Linux",
+        "arch": "x86_64 · AppImage",
+        "key": "linux",
+        "size": 159136248,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.9/pi-web_0.3.9_amd64.AppImage",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.9/appimage/pi-web_0.3.9_amd64.AppImage"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.8",
+    "version": "0.3.8",
+    "prerelease": false,
+    "publishedAt": "2026-08-11T06:28:49Z",
+    "notes": "修复桌面邮箱/手机号密码登录、微信扫码轮询与二维码滚动条；桌面包默认连接生产云端。",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.3.8",
+    "assets": [
+      {
+        "name": "pi-web_0.3.8_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 76395434,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.8/pi-web_0.3.8_x64-setup.exe"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.7",
+    "version": "0.3.7",
+    "prerelease": false,
+    "publishedAt": "2026-08-11T05:17:39Z",
+    "notes": "手机号密码登录、生产云登录地址、Panes 生命周期与画布链路修复；desktop 安装包已验证启动。",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.3.7",
+    "assets": [
+      {
+        "name": "pi-web_0.3.7_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 76404977,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.7/pi-web_0.3.7_x64-setup.exe"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.6",
+    "version": "0.3.6",
+    "prerelease": false,
+    "publishedAt": "2026-08-10T03:57:35Z",
+    "notes": "",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.3.6",
+    "assets": [
+      {
+        "name": "pi-web_0.3.6_aarch64.dmg",
+        "os": "macOS",
+        "arch": "Apple 芯片 · dmg",
+        "key": "mac-arm",
+        "size": 78539474,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.6/pi-web_0.3.6_aarch64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.6/dmg/pi-web_0.3.6_aarch64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.6_x64.dmg",
+        "os": "macOS",
+        "arch": "Intel · dmg",
+        "key": "mac-x64",
+        "size": 80491938,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.6/pi-web_0.3.6_x64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.6/dmg/pi-web_0.3.6_x64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.6_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 66295350,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.6/pi-web_0.3.6_x64-setup.exe",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.6/nsis/pi-web_0.3.6_x64-setup.exe"
+      },
+      {
+        "name": "pi-web_0.3.6_amd64.AppImage",
+        "os": "Linux",
+        "arch": "x86_64 · AppImage",
+        "key": "linux",
+        "size": 159083000,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.6/pi-web_0.3.6_amd64.AppImage",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.6/appimage/pi-web_0.3.6_amd64.AppImage"
+      }
+    ]
+  },
+  {
+    "tag": "v0.3.5",
+    "version": "0.3.5",
+    "prerelease": false,
+    "publishedAt": "2026-08-07T13:05:51Z",
+    "notes": "",
+    "htmlUrl": "https://github.com/blksails/pi-web/releases/tag/v0.3.5",
+    "assets": [
+      {
+        "name": "pi-web_0.3.5_aarch64.dmg",
+        "os": "macOS",
+        "arch": "Apple 芯片 · dmg",
+        "key": "mac-arm",
+        "size": 57871066,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.5/pi-web_0.3.5_aarch64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.5/dmg/pi-web_0.3.5_aarch64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.5_x64.dmg",
+        "os": "macOS",
+        "arch": "Intel · dmg",
+        "key": "mac-x64",
+        "size": 59824315,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.5/pi-web_0.3.5_x64.dmg",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.5/dmg/pi-web_0.3.5_x64.dmg"
+      },
+      {
+        "name": "pi-web_0.3.5_x64-setup.exe",
+        "os": "Windows",
+        "arch": "x64 · exe",
+        "key": "win",
+        "size": 45947288,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.5/pi-web_0.3.5_x64-setup.exe",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.5/nsis/pi-web_0.3.5_x64-setup.exe"
+      },
+      {
+        "name": "pi-web_0.3.5_amd64.AppImage",
+        "os": "Linux",
+        "arch": "x86_64 · AppImage",
+        "key": "linux",
+        "size": 138430968,
+        "github": "https://github.com/blksails/pi-web/releases/download/v0.3.5/pi-web_0.3.5_amd64.AppImage",
+        "oss": "https://pi-web-site.oss-cn-hangzhou.aliyuncs.com/releases/v0.3.5/appimage/pi-web_0.3.5_amd64.AppImage"
+      }
+    ]
+  },
+  {
     "tag": "v0.3.4",
     "version": "0.3.4",
     "prerelease": false,
