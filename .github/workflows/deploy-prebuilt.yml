@@ -1,0 +1,44 @@
+name: Deploy prebuilt site
+
+# A reviewed local export can be deployed without checking out the moved
+# pi-web docs/product directory. The bundle includes the documentation export.
+on:
+  push:
+    branches: ['deploy/desktop-downloads-*']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install dependencies for the Pages Function
+        run: pnpm install --frozen-lockfile
+      - name: Verify and extract the site export
+        run: |
+          sha256sum --check .deploy/SHA256SUMS
+          mkdir -p out
+          tar -xzf .deploy/site.tar.gz -C out
+          test -s out/downloads.html
+          test -s out/en/downloads.html
+          test -s out/docs/index.html
+          test -s out/en/docs/index.html
+      - name: Deploy the export and latest-downloads Function
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          wranglerVersion: '4.151.2'
+          command: pages deploy out --project-name=pi-web-site --branch=main --commit-dirty=true

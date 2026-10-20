@@ -36,7 +36,7 @@ async function copyDir(src, dst) {
 
 async function main() {
   run("node scripts/sync-content.mjs");
-  // 下载页的版本数据在构建期固化(站点是纯静态导出,页面没有服务端)。
+  // 下载页预渲染快照；线上通过 Pages Function 检查最新版本。
   // 取数失败且已有快照时 fetch-releases 会告警并沿用旧快照,不中断构建。
   run("node scripts/fetch-releases.mjs");
   run("node scripts/build-downloads.mjs");

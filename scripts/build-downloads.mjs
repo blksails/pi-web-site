@@ -9,8 +9,7 @@
  * 那套宋瓷配色与排版是站点的视觉基线，复制一份就会随时间漂移成两种风格。本页只追加
  * 少量自有类（.rel-*），全部基于既有的 CSS 变量。
  *
- * 下载源按「OSS 优先、GitHub 备用」呈现，但只有 _releases.json 里 oss 字段非空
- * （fetch-releases.mjs 逐资产 HEAD 探测过）才给 OSS 链接 —— 页面上不会出现死链。
+ * 最新安装包取自 Pi Desktop 的 OSS 更新元数据；历史版本使用 GitHub 下载链接。
  */
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -23,12 +22,16 @@ const DATA = path.join(LANDING, "_releases.json");
 const T = {
   zh: {
     lang: "zh-CN",
-    title: "下载 · pi-web",
+    title: "下载 Pi Desktop · pi-web",
     desc: "pi-web 桌面版与命令行的全部发行版本下载。",
     kicker: "下载",
-    h1: "全部版本",
-    lead: "桌面版基于 Tauri，内置 Node 运行时，下载即用。国内可用镜像加速；镜像未覆盖的版本自动回退 GitHub。",
-    latest: "最新版本",
+    h1: "下载 Pi Desktop",
+    lead: "基于 Electron，内置 pi-web 与 Node 运行时，下载即用。安装包直连国内 OSS，打开页面时自动检查最新正式版本。",
+    latest: "最新正式版",
+    refresh: "检查最新版本",
+    checking: "正在检查最新版本…",
+    checked: "已获取最新正式版",
+    failed: "暂时无法检查更新，已保留当前下载链接，请稍后重试。",
     history: "历史版本",
     historyHint: "点击展开",
     mirror: "镜像",
@@ -37,7 +40,7 @@ const T = {
     notesLink: "更新日志 →",
     allReleases: "在 GitHub 查看全部版本 →",
     unsigned:
-      "安装包<b>尚未做代码签名</b>，首次打开会被系统拦下：macOS 提示「无法验证开发者」，到<b>系统设置 › 隐私与安全性</b>点「仍要打开」；Windows 的 SmartScreen 提示时，点<b>更多信息 › 仍要运行</b>。Linux 的 AppImage 需先 <code>chmod +x</code>。",
+      "若首次打开被系统拦下：macOS 提示「无法验证开发者」，到<b>系统设置 › 隐私与安全性</b>点「仍要打开」；Windows 的 SmartScreen 提示时，点<b>更多信息 › 仍要运行</b>。Linux 的 AppImage 需先 <code>chmod +x</code>。",
     cliTitle: "命令行",
     cliLead: "不想装桌面版？一行命令即可。",
     navDocs: "文档",
@@ -49,12 +52,16 @@ const T = {
   },
   en: {
     lang: "en",
-    title: "Downloads · pi-web",
+    title: "Download Pi Desktop · pi-web",
     desc: "All released builds of the pi-web desktop app and CLI.",
     kicker: "Downloads",
-    h1: "All releases",
-    lead: "The desktop app is built on Tauri and bundles its own Node runtime — download and run. A China mirror is used where available; releases not on the mirror fall back to GitHub.",
-    latest: "Latest",
+    h1: "Download Pi Desktop",
+    lead: "Built on Electron with pi-web and Node bundled. Download directly from our China mirror. This page checks for the latest stable release when opened.",
+    latest: "Latest stable",
+    refresh: "Check for updates",
+    checking: "Checking for updates…",
+    checked: "Latest stable release checked",
+    failed: "Unable to check for updates. Current download links are still available. Try again later.",
     history: "Earlier releases",
     historyHint: "click to expand",
     mirror: "Mirror",
@@ -63,7 +70,7 @@ const T = {
     notesLink: "Release notes →",
     allReleases: "See all releases on GitHub →",
     unsigned:
-      "These builds are <b>not code-signed</b> yet, so the first launch is blocked: on macOS open <b>System Settings › Privacy &amp; Security</b> and click “Open Anyway”; on Windows click <b>More info › Run anyway</b> at the SmartScreen prompt. On Linux, <code>chmod +x</code> the AppImage first.",
+      "If your system blocks the first launch: on macOS open <b>System Settings › Privacy &amp; Security</b> and click “Open Anyway”; on Windows click <b>More info › Run anyway</b> at the SmartScreen prompt. On Linux, <code>chmod +x</code> the AppImage first.",
     cliTitle: "Command line",
     cliLead: "Prefer not to install the desktop app? One command.",
     navDocs: "Docs",
@@ -71,11 +78,16 @@ const T = {
     langHref: "/downloads",
     langLabel: "中文",
     homeHref: "/en/",
-    docsHref: "/docs/01-quickstart",
+    docsHref: "/en/docs/01-quickstart",
   },
 };
 
 const EXTRA_CSS = `
+  .rel-toolbar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 20px}
+  .rel-toolbar button{font:inherit;border:1px solid var(--accent);border-radius:8px;background:var(--panel);color:var(--accent);padding:9px 15px;cursor:pointer}
+  .rel-toolbar button:disabled{opacity:.6;cursor:wait}
+  .rel-toolbar button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  #release-status{font-size:13px;color:var(--ink-2)}
   .rel-wrap{max-width:980px;margin:0 auto;padding:0 24px}
   .rel-head{padding:96px 0 28px}
   .rel-card{background:var(--panel);border:1px solid var(--line);border-radius:14px;
@@ -113,18 +125,22 @@ const EXTRA_CSS = `
 /** 把落地页的版本号与四个平台按钮 href 覆写成最新 Release(OSS 优先)。 */
 function patchLanding(html, latest) {
   const hrefByKey = Object.fromEntries(
-    latest.assets.map((a) => [a.key, a.oss ?? a.github]),
+    [...latest.assets].reverse().map((a) => [a.key, a.oss ?? a.github]),
   );
   let out = html.replace(
     /<span class="ver">[^<]*<\/span>/,
-    `<span class="ver">${latest.tag}</span>`,
+    `<span class="ver">${esc(latest.tag)}</span>`,
   );
   out = out.replace(
     /(<a class="dl-b" data-os=")([^"]+)(" href=")[^"]+(")/g,
     (all, pre, key, mid, post) =>
-      hrefByKey[key] ? `${pre}${key}${mid}${hrefByKey[key]}${post}` : all,
+      `${pre}${key}${mid}${esc(hrefByKey[key] ?? "/downloads")}${post}`,
   );
   return out;
+}
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"\']/g, c => ({"&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "\'":"&#39;"})[c]);
 }
 
 function fmtSize(bytes) {
@@ -143,19 +159,19 @@ function fmtDate(iso, lang) {
 }
 
 function assetBtn(a, t) {
-  // OSS 存在才作主链接;否则整块退回 GitHub,不留死链。
+  // 最新版使用更新源中的真实文件名；历史版使用 GitHub 的原始链接。
   const primary = a.oss ?? a.github;
   const viaMirror = a.oss !== undefined;
   const size = fmtSize(a.size);
   const alt =
-    viaMirror === true
-      ? `<a class="rel-alt" href="${a.github}" rel="noopener">${t.viaGithub}</a>`
+    viaMirror === true && a.github
+      ? `<a class="rel-alt" href="${esc(a.github)}" rel="noopener">${t.viaGithub}</a>`
       : "";
   return `
         <div>
-          <a class="rel-b" data-os="${a.key}" href="${primary}" rel="noopener">
-            <span class="os">${a.os}</span>
-            <span class="arch">${a.arch}${size ? ` · ${size}` : ""}</span>
+          <a class="rel-b" data-os="${esc(a.key)}" href="${esc(primary)}" rel="noopener">
+            <span class="os">${esc(a.os)}</span>
+            <span class="arch">${esc(a.arch)}${size ? ` · ${size}` : ""}</span>
             ${viaMirror ? `<span class="via">${t.mirror}</span>` : ""}
           </a>
           ${alt}
@@ -164,9 +180,9 @@ function assetBtn(a, t) {
 
 function releaseCard(r, t, isLatest) {
   return `
-      <div class="rel-card${isLatest ? " is-latest" : ""}">
+      <div class="rel-card${isLatest ? " is-latest" : ""}"${isLatest ? ' id="latest-release"' : ""}>
         <div class="rel-top">
-          <span class="rel-ver">${r.tag}</span>
+          <span class="rel-ver">${esc(r.tag)}</span>
           ${isLatest ? `<span class="rel-badge">${t.latest}</span>` : ""}
           ${r.prerelease ? `<span class="rel-badge">pre-release</span>` : ""}
           <span class="rel-date">${t.released} ${fmtDate(r.publishedAt, t.lang)}</span>
@@ -174,7 +190,7 @@ function releaseCard(r, t, isLatest) {
         <div class="rel-btns">${r.assets.map((a) => assetBtn(a, t)).join("")}
         </div>
         <div class="rel-foot">
-          <a href="${r.htmlUrl}" target="_blank" rel="noopener">${t.notesLink}</a>
+          <a href="${esc(r.htmlUrl)}" target="_blank" rel="noopener">${t.notesLink}</a>
         </div>
       </div>`;
 }
@@ -209,6 +225,10 @@ ${styleBlock}
       <p class="feat-p">${t.lead}</p>
     </div>
 
+    <div class="rel-toolbar">
+      <button id="check-release" type="button">${t.refresh}</button>
+      <span id="release-status" role="status" aria-live="polite"></span>
+    </div>
     ${releaseCard(latest, t, true)}
     <p class="rel-note">${t.unsigned}</p>
 
@@ -222,9 +242,11 @@ ${styleBlock}
     }
 
     <div class="rel-foot" style="margin:28px 0 80px">
-      <a href="https://github.com/blksails/pi-web/releases" target="_blank" rel="noopener">${t.allReleases}</a>
+      <a href="https://github.com/blksails/pi-desktop/releases" target="_blank" rel="noopener">${t.allReleases}</a>
     </div>
   </div>
+<script type="application/json" id="download-i18n">${JSON.stringify(t).replace(/</g, "\\u003c")}</script>
+<script src="/downloads.js" defer></script>
 </body>
 </html>
 `;
@@ -267,7 +289,7 @@ async function main() {
   const mirrored = releases.filter((r) => r.assets.some((a) => a.oss !== undefined)).length;
   console.log(
     `[build-downloads] ✓ downloads.html + en/downloads.html` +
-      `(${releases.length} 个版本,${mirrored} 个走镜像;落地页 → ${latest.tag})`,
+      `(${releases.length} 个版本,${mirrored} 个走镜像;落地页 → ${esc(latest.tag)})`,
   );
 }
 
